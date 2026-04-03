@@ -1,6 +1,43 @@
 {
-  "_meta": {
-    "description": "用户选择跳过翻译的字符串列表，extract 时自动排除这些条目"
-  },
-  "skip": []
+  "skip": [
+    "Claude Code",
+    "Claude Opus 4.6",
+    "Claude 3.7 Sonnet",
+    "Claude 3.5 Sonnet",
+    "Claude 3.5 Haiku",
+    "Claude Enterprise",
+    "Claude Team",
+    "Claude Max",
+    "Claude Pro",
+    "Claude API",
+    "Example: anthropics/claude-cli",
+    "Path to marketplace.json within repo (defaults to .claude-plugin/marketplace.json)",
+    "Set this to true to dangerously override sandbox mode and run commands without sandboxing.",
+    "Must provide one of the `baseURL` or `resource` arguments, or the `ANTHROPIC_FOUNDRY_RESOURCE` environment variable",
+    "No workspace ID found. Set `workspaceId` in the constructor or the `ANTHROPIC_AWS_WORKSPACE_ID` environment variable.",
+    "You are Claude Code, Anthropic's official CLI for Claude.",
+    "You are Claude Code, Anthropic's official CLI for Claude, running within the Claude Agent SDK.",
+    "You are a Claude agent, built on Anthropic's Claude Agent SDK.",
+    "Opus 4.6 in plan mode, else Sonnet 4.6",
+    "MCP rules do not support patterns in parentheses",
+    "JSON Schema reference for Claude Code settings",
+    "Claude Code's client_id registered at the IdP",
+    "XAA (SEP-990) IdP connection. Configure once; all XAA-enabled MCP servers reuse this.",
+    "Customize attribution text for commits and PRs. Each field defaults to the standard Claude Code attribution if not set.",
+    "Per-plugin configuration including MCP server user configs, keyed by plugin ID (plugin@marketplace format)",
+    "Claude in Chrome (Beta)",
+    "Sandbox failed to initialize. ",
+    "Use the Claude-in-Chrome MCP for browser interaction.",
+    "Tab ID to read from. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID.",
+    "Tab ID to search in. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID.",
+    "Tab ID to navigate. Must be a tab in the current group. Use tabs_context_mcp first if you don't have a valid tab ID.",
+    "Fast mode unavailable: Fast mode is not available in the Agent SDK",
+    "Fast mode is not available in the Agent SDK",
+    "Fast mode unavailable: Fast mode is not available on Bedrock, Vertex, Foundry, or Claude Platform on AWS",
+    "Fast mode is not available on Bedrock, Vertex, Foundry, or Claude Platform on AWS",
+    "Name of the MCP server this channel binds to. Must match a key in this plugin's mcpServers.",
+    "Local directory containing .claude-plugin/marketplace.json",
+    "WebSearch(claude ai)",
+    "Use this agent to configure the user's Claude Code status line setting."
+  ]
 }
