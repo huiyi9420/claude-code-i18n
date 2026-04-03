@@ -39,6 +39,11 @@
     "Local directory containing .claude-plugin/marketplace.json",
     "WebSearch(claude ai)",
     "Use this agent to configure the user's Claude Code status line setting.",
-    "MCP headersHelper invoked before trust check"
+    "MCP headersHelper invoked before trust check",
+    "CCR v2 subagent event reader registered for session resume",
+    "Claude Code URL Handler.app",
+    "Claude 3 Opus",
+    "Claude Sonnet 4.6",
+    "Claude Haiku 4.5"
   ]
 }
