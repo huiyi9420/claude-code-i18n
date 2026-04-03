@@ -38,6 +38,7 @@
     "Name of the MCP server this channel binds to. Must match a key in this plugin's mcpServers.",
     "Local directory containing .claude-plugin/marketplace.json",
     "WebSearch(claude ai)",
-    "Use this agent to configure the user's Claude Code status line setting."
+    "Use this agent to configure the user's Claude Code status line setting.",
+    "MCP headersHelper invoked before trust check"
   ]
 }
