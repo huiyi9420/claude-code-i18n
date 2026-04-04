@@ -1,9 +1,9 @@
 {
   "_meta": {
     "name": "Claude Code 中文汉化",
-    "version": "4.1.0",
+    "version": "4.2.0",
     "description": "Claude Code CLI 终端 UI 汉化映射表（安全版，避免短字符串误替换）",
-    "cli_version": "2.1.91",
+    "cli_version": "2.1.92",
     "note": "键为英文原文(需要精确匹配)，值为中文翻译"
   },
   "translations": {
@@ -697,6 +697,23 @@
     "Print the default auto mode environment, allow, and deny rules as JSON": "以 JSON 格式输出默认的自动模式环境、允许和拒绝规则",
     "Print the effective auto mode config as JSON: your settings where set, defaults otherwise": "以 JSON 格式输出有效的自动模式配置：已设置的用你的设置，其余使用默认值",
     "Get AI feedback on your custom auto mode rules": "获取关于自定义自动模式规则的 AI 反馈",
-    "Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)": "安装 Claude Code 原生构建。使用 [target] 指定版本（stable、latest 或具体版本号）"
+    "Install Claude Code native build. Use [target] to specify version (stable, latest, or specific version)": "安装 Claude Code 原生构建。使用 [target] 指定版本（stable、latest 或具体版本号）",
+    "These will be written to ~/.claude/settings.json under env:": "这些将写入 ~/.claude/settings.json 的 env 字段下：",
+    "Skip — use Claude Code defaults (auto-updates)": "跳过 — 使用 Claude Code 默认设置（自动更新）",
+    "Claude Code reads this from AWS_REGION, not ~/.aws/config — set it explicitly even if your profile has a region.": "Claude Code 从 AWS_REGION 读取此设置，而非 ~/.aws/config — 即使你的配置文件已设置区域，也请显式指定。",
+    "No Anthropic inference profiles found in this region. You may still proceed — model defaults will use the built-in IDs.": "在此区域未找到 Anthropic 推理配置文件。你仍可继续 — 模型默认值将使用内置 ID。",
+    "Remote plan mode with rich web editing experience.": "远程计划模式，提供丰富的 Web 编辑体验。",
+    "Advanced multi-agent plan mode.": "高级多智能体计划模式。",
+    "Resume a Claude Code session from claude.ai": "从 claude.ai 恢复 Claude Code 会话",
+    "API Usage Billing": "API 按量计费",
+    "API usage billing": "API 按量计费",
+    "Proceed with Extra Usage billing": "继续使用额外用量计费",
+    "Billed as extra usage": "按额外用量计费",
+    "Anthropic Console 账号 ·": "Anthropic Console 账号 ·",
+    "Claude Enterprise": "Claude 企业版",
+    "Claude Team": "Claude 团队版",
+    "Claude Max": "Claude Max",
+    "Claude Pro": "Claude Pro",
+    "Claude API": "Claude API"
   }
 }
