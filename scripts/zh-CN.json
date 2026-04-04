@@ -714,6 +714,16 @@
     "Claude Team": "Claude 团队版",
     "Claude Max": "Claude Max",
     "Claude Pro": "Claude Pro",
-    "Claude API": "Claude API"
+    "Claude API": "Claude API",
+    "Esc to cancel": "Esc 取消",
+    " · Tab to amend": " · Tab 修改",
+    "Yes, and always allow access to ": "是的，始终允许访问 ",
+    " from this project": "（来自此项目）",
+    "Do you want to proceed?": "是否继续？",
+    "Claude requested permissions to use ": "Claude 请求使用权限：",
+    ", but you haven't granted it yet.": "，但你尚未授予该权限。",
+    "Yes, allow reading from ": "是的，允许读取 ",
+    " again to exit": " 再次退出",
+    "Press ": "按 "
   }
 }
