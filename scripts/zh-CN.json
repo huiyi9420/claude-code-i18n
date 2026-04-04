@@ -841,5 +841,7 @@
     "Task not ready": "任务未就绪",
     "Compacted": "已压缩",
     "to see full summary": "查看完整摘要"
-  }
+  },
+  "Name your conversations with /rename to find them easily in /resume later": "使用 /rename 命名对话，方便稍后用 /resume 轻松找到",
+  "Tip: You can enable auto-connect to IDE in /config or with the --ide flag": "提示：你可以在 /config 中或使用 --ide 标志启用自动连接 IDE"
 }
