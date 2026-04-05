@@ -12,7 +12,7 @@
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题
+- [x] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题 (completed 2026-04-05)
 - [ ] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力
 - [ ] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本
 
@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Safety | 0/3 | Planning complete | - |
+| 1. Foundation & Safety | 0/3 | Complete    | 2026-04-05 |
 | 2. Core Engine | 0/4 | Not started | - |
 | 3. Integration & Quality | 0/3 | Not started | - |
