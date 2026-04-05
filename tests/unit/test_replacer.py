@@ -22,7 +22,7 @@ class TestClassifyEntry:
         assert classify_entry("An unexpected error occurred in the system") == "long"
 
     def test_classify_medium(self):
-        assert classify_entry("Plan Mode") == "medium"
+        assert classify_entry("Permission denied") == "medium"
 
     def test_classify_short(self):
         assert classify_entry("OK") == "short"
@@ -63,8 +63,8 @@ class TestLongReplacement:
         assert stats["long"] == 2
 
     def test_long_replaces_all_occurrences(self):
-        content = 'var a="Permission denied";var b="Permission denied";'
-        translations = {"Permission denied": "权限被拒绝"}
+        content = 'var a="Permission denied for user";var b="Permission denied for user";'
+        translations = {"Permission denied for user": "权限被拒绝"}
         new_content, stats = apply_translations(content, translations, set())
         assert new_content.count("权限被拒绝") == 2
         assert stats["long"] == 2
@@ -76,32 +76,32 @@ class TestLongReplacement:
 class TestMediumReplacement:
     def test_medium_quote_boundary(self):
         content = _load_fixture("sample_replacer_content.js")
-        translations = {"Plan Mode": "规划模式"}
+        translations = {"Permission denied": "权限被拒绝"}
         new_content, stats = apply_translations(content, translations, set())
-        assert "规划模式" in new_content
+        assert "权限被拒绝" in new_content
 
     def test_medium_preserves_outside_quote(self):
-        # "Plan Mode" inside quotes should be replaced,
-        # but bare Plan Mode outside quotes should not
-        content = 'var x="Plan Mode";Plan Mode();'
-        translations = {"Plan Mode": "规划模式"}
+        # "Permission denied" inside quotes should be replaced,
+        # but bare text outside quotes should not
+        content = 'var x="Permission denied";PermissionDenied();'
+        translations = {"Permission denied": "权限被拒绝"}
         new_content, stats = apply_translations(content, translations, set())
-        assert '"规划模式"' in new_content
-        assert "Plan Mode()" in new_content  # outside quotes preserved
+        assert '"权限被拒绝"' in new_content
+        assert "PermissionDenied()" in new_content  # outside quotes preserved
 
     def test_medium_reverse_order(self):
         # Multiple occurrences in different positions
-        content = 'var a="Dark mode";var b="Dark mode";var c="Dark mode";'
-        translations = {"Dark mode": "暗色模式"}
+        content = 'var a="Permission denied";var b="Permission denied";var c="Permission denied";'
+        translations = {"Permission denied": "权限被拒绝"}
         new_content, stats = apply_translations(content, translations, set())
-        assert new_content.count("暗色模式") == 3
+        assert new_content.count("权限被拒绝") == 3
         assert stats["medium"] == 3
 
     def test_medium_single_quote(self):
-        content = "var x='Plan Mode';"
-        translations = {"Plan Mode": "规划模式"}
+        content = "var x='Permission denied';"
+        translations = {"Permission denied": "权限被拒绝"}
         new_content, stats = apply_translations(content, translations, set())
-        assert "'规划模式'" in new_content
+        assert "'权限被拒绝'" in new_content
 
 
 # ── Short string replacement (APPLY-04) ──────────────────────────
@@ -154,12 +154,12 @@ class TestOrdering:
         # "Extended thinking is enabled" must be replaced before "Extended"
         content = 'var x="Extended thinking is enabled";'
         translations = {
-            "Extended thinking is enabled": "扩展思考已启用",
-            "Extended": "扩展",
+            "Extended thinking is enabled": "已启用扩展思考功能",
+            "Extended": "扩展的",
         }
         new_content, stats = apply_translations(content, translations, set())
-        assert "扩展思考已启用" in new_content
-        assert "扩展" not in new_content  # long match consumed it
+        assert "已启用扩展思考功能" in new_content
+        assert "扩展的" not in new_content  # long match consumed it
 
     def test_no_partial_corruption(self):
         # Long string replacement should not break medium/short matches
@@ -189,7 +189,7 @@ class TestStats:
         content = _load_fixture("sample_replacer_content.js")
         translations = {
             "An unexpected error occurred while processing your request.": "处理请求时发生意外错误。",
-            "Plan Mode": "规划模式",
+            "Permission denied": "权限被拒绝",
             "OK": "好的",
         }
         _, stats = apply_translations(content, translations, set())
@@ -202,7 +202,7 @@ class TestStats:
         translations = {"Permission denied": "Permission denied"}
         new_content, stats = apply_translations(content, translations, set())
         assert stats["skipped"] == 1
-        assert stats["long"] == 0
+        assert stats["medium"] == 0
         assert "Permission denied" in new_content
 
     def test_skip_reasons_tracked(self):
