@@ -45,13 +45,13 @@ Plans:
   3. 用户运行 `python engine.py extract` 获得新版本 cli.js 中的可翻译字符串候选列表（JSON 格式，含评分和出现次数），列表中不包含任何中文字符或代码标识符
   4. 当 Claude Code 更新后（版本号变化），工具自动检测版本变更、删除旧备份并从新 cli.js 重新创建纯净备份，向用户报告版本变化（旧版本号 -> 新版本号）
   5. 用户运行 `python engine.py status` 能看到当前 CLI 版本、汉化状态、翻译条目数、备份完整性的 JSON 输出
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: Translation Map + Scanner -- JSON 映射表加载/校验 + 字符串扫描器（信号评分 + 噪声过滤）
-- [ ] 02-02: Replacement Engine -- 三级替换策略（长/中/短）+ 逆序替换 + Hook 精确替换
-- [ ] 02-03: Verification + Version -- node --check 验证 + 回滚 + 版本检测 + 版本变更处理
-- [ ] 02-04: Extract + Status Commands -- extract 命令 + status/version 命令 + 跨平台支持
+- [ ] 02-01-PLAN.md -- Translation Map + Scanner: JSON 映射表加载/校验 + 噪声过滤器 + UI 指标评分 + 字符串扫描器
+- [ ] 02-02-PLAN.md -- Replacement Engine: 三级替换策略（长/中/短）+ 逆序替换 + 统计追踪
+- [ ] 02-03-PLAN.md -- Verification + Version: node --check 验证 + 回滚 + 版本检测 + 版本变更处理
+- [ ] 02-04-PLAN.md -- Commands + CLI Integration: apply/extract/status 命令实现 + CLI 路由更新
 
 ### Phase 3: Integration & Quality
 **Goal**: 用户可以通过安装脚本一键部署汉化工具，且工具经过完整测试覆盖，达到可发布质量
