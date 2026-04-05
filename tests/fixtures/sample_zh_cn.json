@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "name": "Claude Code Test Map",
+    "version": "1.0.0",
+    "description": "Sample translation map for unit testing",
+    "cli_version": "2.1.92"
+  },
+  "translations": {
+    "Accept edits and apply changes to your codebase": "接受编辑并将更改应用到你的代码库",
+    "Bypass Permissions Mode": "绕过权限模式",
+    "Plan Mode": "规划模式",
+    "Auto mode": "自动模式",
+    "Loading": "Loading"
+  }
+}
