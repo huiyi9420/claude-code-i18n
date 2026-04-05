@@ -50,7 +50,7 @@ Plans:
 Plans:
 - [ ] 02-01-PLAN.md -- Translation Map + Scanner: JSON 映射表加载/校验 + 噪声过滤器 + UI 指标评分 + 字符串扫描器
 - [ ] 02-02-PLAN.md -- Replacement Engine: 三级替换策略（长/中/短）+ 逆序替换 + 统计追踪
-- [ ] 02-03-PLAN.md -- Verification + Version: node --check 验证 + 回滚 + 版本检测 + 版本变更处理
+- [x] 02-03-PLAN.md -- Verification + Version: node --check 验证 + 回滚 + 版本检测 + 版本变更处理
 - [ ] 02-04-PLAN.md -- Commands + CLI Integration: apply/extract/status 命令实现 + CLI 路由更新
 
 ### Phase 3: Integration & Quality

@@ -31,8 +31,8 @@
 - [ ] **APPLY-04**: Short strings (<10 chars) use word-boundary + whitelist + frequency cap (default skip)
 - [ ] **APPLY-05**: All replacements proceed longest-first to prevent partial matches
 - [ ] **APPLY-06**: Replacement count tracked per category (long/medium/short/skipped)
-- [ ] **APPLY-07**: After all replacements, `node --check` validates syntax
-- [ ] **APPLY-08**: On syntax validation failure, automatic rollback to backup
+- [x] **APPLY-07**: After all replacements, `node --check` validates syntax
+- [x] **APPLY-08**: On syntax validation failure, automatic rollback to backup
 - [ ] **APPLY-09**: Hook/template string patterns replaced via precise context-aware sed (not blind global)
 - [ ] **APPLY-10**: Apply outputs JSON result with ok/replacements/stats/entries
 
@@ -47,10 +47,10 @@
 
 ### Version Detection (VER)
 
-- [ ] **VER-01**: Engine reads CLI version from package.json
-- [ ] **VER-02**: Engine compares CLI version with translation map's `_meta.cli_version`
-- [ ] **VER-03**: On version mismatch, engine deletes stale backup and re-creates from new cli.js
-- [ ] **VER-04**: Version change reported to user with old→new version numbers
+- [x] **VER-01**: Engine reads CLI version from package.json
+- [x] **VER-02**: Engine compares CLI version with translation map's `_meta.cli_version`
+- [x] **VER-03**: On version mismatch, engine deletes stale backup and re-creates from new cli.js
+- [x] **VER-04**: Version change reported to user with old→new version numbers
 
 ### Status & Output (STATUS)
 
@@ -68,8 +68,8 @@
 
 ### Cross-Platform (PLATFORM)
 
-- [ ] **PLAT-01**: All file paths use `pathlib.Path` (no hardcoded OS-specific separators)
-- [ ] **PLAT-02**: No hardcoded user paths — all resolved dynamically
+- [x] **PLAT-01**: All file paths use `pathlib.Path` (no hardcoded OS-specific separators)
+- [x] **PLAT-02**: No hardcoded user paths — all resolved dynamically
 - [ ] **PLAT-03**: `sed -i` in Hook replacements uses platform-appropriate syntax (macOS vs Linux)
 
 ### Installation (INSTALL)
@@ -141,8 +141,8 @@
 | APPLY-04 | Phase 2 | Pending |
 | APPLY-05 | Phase 2 | Pending |
 | APPLY-06 | Phase 2 | Pending |
-| APPLY-07 | Phase 2 | Pending |
-| APPLY-08 | Phase 2 | Pending |
+| APPLY-07 | Phase 2 | Complete |
+| APPLY-08 | Phase 2 | Complete |
 | APPLY-09 | Phase 2 | Pending |
 | APPLY-10 | Phase 2 | Pending |
 | EXTRACT-01 | Phase 2 | Pending |
@@ -151,10 +151,10 @@
 | EXTRACT-04 | Phase 2 | Pending |
 | EXTRACT-05 | Phase 2 | Pending |
 | EXTRACT-06 | Phase 2 | Pending |
-| VER-01 | Phase 2 | Pending |
-| VER-02 | Phase 2 | Pending |
-| VER-03 | Phase 2 | Pending |
-| VER-04 | Phase 2 | Pending |
+| VER-01 | Phase 2 | Complete |
+| VER-02 | Phase 2 | Complete |
+| VER-03 | Phase 2 | Complete |
+| VER-04 | Phase 2 | Complete |
 | STATUS-01 | Phase 2 | Pending |
 | STATUS-02 | Phase 2 | Pending |
 | STATUS-03 | Phase 2 | Pending |
@@ -163,8 +163,8 @@
 | MAP-02 | Phase 2 | Pending |
 | MAP-03 | Phase 2 | Pending |
 | MAP-04 | Phase 2 | Pending |
-| PLAT-01 | Phase 2 | Pending |
-| PLAT-02 | Phase 2 | Pending |
+| PLAT-01 | Phase 2 | Complete |
+| PLAT-02 | Phase 2 | Complete |
 | PLAT-03 | Phase 2 | Pending |
 | INST-01 | Phase 3 | Pending |
 | INST-02 | Phase 3 | Pending |
