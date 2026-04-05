@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md -- Path Resolver: 5 级级联路径检测 (env/config/volta/npm/common) + 路径验证 + 常量定义 + 单元测试
-- [ ] 01-02-PLAN.md -- Backup Manager: 不可变备份管理器 + SHA-256 校验 + CJK 纯净性检查 + 原子写入工具 + 单元测试
+- [x] 01-02-PLAN.md -- Backup Manager: 不可变备份管理器 + SHA-256 校验 + CJK 纯净性检查 + 原子写入工具 + 单元测试
 - [ ] 01-03-PLAN.md -- CLI Framework + Restore: argparse 子命令路由 + restore/status/version 命令 + engine.py 入口 + 单元测试
 
 ### Phase 2: Core Engine

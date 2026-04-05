@@ -15,13 +15,13 @@
 
 ### Backup Integrity (BAK)
 
-- [ ] **BAK-01**: First apply creates backup from pristine cli.js (no Chinese characters present)
-- [ ] **BAK-02**: Backup creation computes SHA-256 hash stored in `.backup.hash`
-- [ ] **BAK-03**: Every restore/apply validates backup hash before use; mismatch triggers re-extraction
-- [ ] **BAK-04**: Backup purity check: scan for CJK characters, reject if found (>0 CJK chars)
-- [ ] **BAK-05**: Atomic write for all file operations (write to temp, then os.rename)
-- [ ] **BAK-06**: Backup file set read-only after creation (chmod 444) to prevent accidental modification
-- [ ] **BAK-07**: Restore command returns cli.js to 100% pure English with zero Chinese characters
+- [x] **BAK-01**: First apply creates backup from pristine cli.js (no Chinese characters present)
+- [x] **BAK-02**: Backup creation computes SHA-256 hash stored in `.backup.hash`
+- [x] **BAK-03**: Every restore/apply validates backup hash before use; mismatch triggers re-extraction
+- [x] **BAK-04**: Backup purity check: scan for CJK characters, reject if found (>0 CJK chars)
+- [x] **BAK-05**: Atomic write for all file operations (write to temp, then os.rename)
+- [x] **BAK-06**: Backup file set read-only after creation (chmod 444) to prevent accidental modification
+- [x] **BAK-07**: Restore command returns cli.js to 100% pure English with zero Chinese characters
 
 ### Apply Engine (APPLY)
 
@@ -128,13 +128,13 @@
 | PATH-03 | Phase 1 | Complete |
 | PATH-04 | Phase 1 | Complete |
 | PATH-05 | Phase 1 | Complete |
-| BAK-01 | Phase 1 | Pending |
-| BAK-02 | Phase 1 | Pending |
-| BAK-03 | Phase 1 | Pending |
-| BAK-04 | Phase 1 | Pending |
-| BAK-05 | Phase 1 | Pending |
-| BAK-06 | Phase 1 | Pending |
-| BAK-07 | Phase 1 | Pending |
+| BAK-01 | Phase 1 | Complete |
+| BAK-02 | Phase 1 | Complete |
+| BAK-03 | Phase 1 | Complete |
+| BAK-04 | Phase 1 | Complete |
+| BAK-05 | Phase 1 | Complete |
+| BAK-06 | Phase 1 | Complete |
+| BAK-07 | Phase 1 | Complete |
 | APPLY-01 | Phase 2 | Pending |
 | APPLY-02 | Phase 2 | Pending |
 | APPLY-03 | Phase 2 | Pending |
