@@ -28,12 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. 用户运行 `python engine.py restore` 后，cli.js 恢复为 100% 纯英文（零中文字符残留），且恢复前自动校验备份哈希
   4. 当 CLI 未安装或路径无效时，用户看到清晰的错误信息和安装指引（非 Python traceback）
   5. 所有文件写入操作均为原子性（断电或中断不会留下损坏文件）
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Path Resolver -- 自动检测 CLI 路径 + 环境变量/配置文件覆盖 + 校验
-- [ ] 01-02: Backup Manager -- 纯净备份创建 + SHA-256 校验 + CJK 污染检测 + 只读保护
-- [ ] 01-03: CLI Framework + Restore -- argparse 子命令框架 + restore 命令 + 原子写入工具
+- [ ] 01-01-PLAN.md -- Path Resolver: 5 级级联路径检测 (env/config/volta/npm/common) + 路径验证 + 常量定义 + 单元测试
+- [ ] 01-02-PLAN.md -- Backup Manager: 不可变备份管理器 + SHA-256 校验 + CJK 纯净性检查 + 原子写入工具 + 单元测试
+- [ ] 01-03-PLAN.md -- CLI Framework + Restore: argparse 子命令路由 + restore/status/version 命令 + engine.py 入口 + 单元测试
 
 ### Phase 2: Core Engine
 **Goal**: 用户运行一条命令即可安全地将 Claude Code CLI 界面汉化为中文，替换后语法正确、失败自动回滚，且能从纯净源提取新的可翻译字符串
@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Safety | 0/3 | Not started | - |
+| 1. Foundation & Safety | 0/3 | Planning complete | - |
 | 2. Core Engine | 0/4 | Not started | - |
 | 3. Integration & Quality | 0/3 | Not started | - |
