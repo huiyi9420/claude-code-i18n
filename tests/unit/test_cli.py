@@ -97,18 +97,12 @@ class TestRestoreCommand:
 
     def test_restore_no_cli(self, capsys):
         """When CLI not installed, restore should output error JSON (not traceback)."""
-        from scripts.i18n.commands.restore import cmd_restore
-
-        with patch('scripts.i18n.cli.find_cli_install_dir', return_value=(None, 'not_found')):
-            with pytest.raises(SystemExit):
-                with patch('scripts.i18n.commands.restore.get_cli_dir') as mock_get:
-                    from scripts.i18n.cli import output_error
-                    # Simulate get_cli_dir calling output_error
-                    with pytest.raises(SystemExit):
-                        output_error(
-                            "Claude Code CLI not found",
-                            hint="Install Claude Code first: npm install -g @anthropic-ai/claude-code",
-                        )
+        with patch('scripts.i18n.commands.restore.get_cli_dir') as mock_get:
+            mock_get.side_effect = SystemExit(1)
+            with pytest.raises(SystemExit) as exc_info:
+                from scripts.i18n.commands.restore import cmd_restore
+                cmd_restore()
+            assert exc_info.value.code == 1
 
     def test_restore_hash_mismatch_autofix(self, mock_cli_dir, capsys):
         """Hash mismatch should auto-recreate backup and retry restore."""
