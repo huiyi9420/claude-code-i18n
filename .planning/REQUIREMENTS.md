@@ -25,16 +25,16 @@
 
 ### Apply Engine (APPLY)
 
-- [ ] **APPLY-01**: Apply reads from pristine backup (not current cli.js) as source
-- [ ] **APPLY-02**: Long strings (>20 chars) use global replacement with exact match
-- [ ] **APPLY-03**: Medium strings (10-20 chars) use quote-boundary constrained replacement
-- [ ] **APPLY-04**: Short strings (<10 chars) use word-boundary + whitelist + frequency cap (default skip)
-- [ ] **APPLY-05**: All replacements proceed longest-first to prevent partial matches
-- [ ] **APPLY-06**: Replacement count tracked per category (long/medium/short/skipped)
+- [x] **APPLY-01**: Apply reads from pristine backup (not current cli.js) as source
+- [x] **APPLY-02**: Long strings (>20 chars) use global replacement with exact match
+- [x] **APPLY-03**: Medium strings (10-20 chars) use quote-boundary constrained replacement
+- [x] **APPLY-04**: Short strings (<10 chars) use word-boundary + whitelist + frequency cap (default skip)
+- [x] **APPLY-05**: All replacements proceed longest-first to prevent partial matches
+- [x] **APPLY-06**: Replacement count tracked per category (long/medium/short/skipped)
 - [x] **APPLY-07**: After all replacements, `node --check` validates syntax
 - [x] **APPLY-08**: On syntax validation failure, automatic rollback to backup
-- [ ] **APPLY-09**: Hook/template string patterns replaced via precise context-aware sed (not blind global)
-- [ ] **APPLY-10**: Apply outputs JSON result with ok/replacements/stats/entries
+- [x] **APPLY-09**: Hook/template string patterns replaced via precise context-aware sed (not blind global)
+- [x] **APPLY-10**: Apply outputs JSON result with ok/replacements/stats/entries
 
 ### Extract (EXTRACT)
 
@@ -135,16 +135,16 @@
 | BAK-05 | Phase 1 | Complete |
 | BAK-06 | Phase 1 | Complete |
 | BAK-07 | Phase 1 | Complete |
-| APPLY-01 | Phase 2 | Pending |
-| APPLY-02 | Phase 2 | Pending |
-| APPLY-03 | Phase 2 | Pending |
-| APPLY-04 | Phase 2 | Pending |
-| APPLY-05 | Phase 2 | Pending |
-| APPLY-06 | Phase 2 | Pending |
+| APPLY-01 | Phase 2 | Complete |
+| APPLY-02 | Phase 2 | Complete |
+| APPLY-03 | Phase 2 | Complete |
+| APPLY-04 | Phase 2 | Complete |
+| APPLY-05 | Phase 2 | Complete |
+| APPLY-06 | Phase 2 | Complete |
 | APPLY-07 | Phase 2 | Complete |
 | APPLY-08 | Phase 2 | Complete |
-| APPLY-09 | Phase 2 | Pending |
-| APPLY-10 | Phase 2 | Pending |
+| APPLY-09 | Phase 2 | Complete |
+| APPLY-10 | Phase 2 | Complete |
 | EXTRACT-01 | Phase 2 | Pending |
 | EXTRACT-02 | Phase 2 | Pending |
 | EXTRACT-03 | Phase 2 | Pending |

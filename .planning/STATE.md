@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-04-05T13:07:36.511Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-04-05T13:09:22.928Z"
 last_activity: 2026-04-05
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-05)
 ## Current Position
 
 Phase: 2 (Core Engine) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-04-05
 
@@ -56,6 +56,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01 P02 | 5min | 2 tasks | 5 files |
 | Phase 01 P03 | 4min | 1 tasks | 5 files |
 | Phase 02-core-engine P03 | 3min | 1 tasks | 4 files |
+| Phase 02 P02 | 4min | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 02-core-engine]: verify_syntax returns dict with ok+error for consistent error handling across all failure modes
 - [Phase 02-core-engine]: handle_version_change uses BackupManager._make_writable before unlink to handle chmod 444 read-only backups
 - [Phase 02-core-engine]: check_version_change treats unknown CLI version as unchanged to avoid false-positive version mismatch triggers
+- [Phase 02]: TDD RED/GREEN cycle: test assertions corrected to match actual string lengths (Plan Mode=9chars is short, Permission denied=18chars is medium) — Test strings must match the tier classification boundaries defined in spec: >20=long, >10=medium, else=short
+- [Phase 02]: skip_reasons dict tracks both 'identical' (en==zh) and 'skip_word' reasons for auditability — Needed for debugging why specific translations were skipped during apply
 
 ### Pending Todos
 
@@ -89,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-05T13:07:36.508Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-04-05T13:09:22.926Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
