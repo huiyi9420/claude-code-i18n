@@ -123,22 +123,68 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PATH-01~05 | Phase 1 | Pending |
-| BAK-01~07 | Phase 1 | Pending |
-| APPLY-01~10 | Phase 2 | Pending |
-| EXTRACT-01~06 | Phase 2 | Pending |
-| VER-01~04 | Phase 2 | Pending |
-| STATUS-01~04 | Phase 2 | Pending |
-| MAP-01~04 | Phase 2 | Pending |
-| PLAT-01~03 | Phase 2 | Pending |
-| INST-01~03 | Phase 3 | Pending |
-| TEST-01~07 | Phase 3 | Pending |
+| PATH-01 | Phase 1 | Pending |
+| PATH-02 | Phase 1 | Pending |
+| PATH-03 | Phase 1 | Pending |
+| PATH-04 | Phase 1 | Pending |
+| PATH-05 | Phase 1 | Pending |
+| BAK-01 | Phase 1 | Pending |
+| BAK-02 | Phase 1 | Pending |
+| BAK-03 | Phase 1 | Pending |
+| BAK-04 | Phase 1 | Pending |
+| BAK-05 | Phase 1 | Pending |
+| BAK-06 | Phase 1 | Pending |
+| BAK-07 | Phase 1 | Pending |
+| APPLY-01 | Phase 2 | Pending |
+| APPLY-02 | Phase 2 | Pending |
+| APPLY-03 | Phase 2 | Pending |
+| APPLY-04 | Phase 2 | Pending |
+| APPLY-05 | Phase 2 | Pending |
+| APPLY-06 | Phase 2 | Pending |
+| APPLY-07 | Phase 2 | Pending |
+| APPLY-08 | Phase 2 | Pending |
+| APPLY-09 | Phase 2 | Pending |
+| APPLY-10 | Phase 2 | Pending |
+| EXTRACT-01 | Phase 2 | Pending |
+| EXTRACT-02 | Phase 2 | Pending |
+| EXTRACT-03 | Phase 2 | Pending |
+| EXTRACT-04 | Phase 2 | Pending |
+| EXTRACT-05 | Phase 2 | Pending |
+| EXTRACT-06 | Phase 2 | Pending |
+| VER-01 | Phase 2 | Pending |
+| VER-02 | Phase 2 | Pending |
+| VER-03 | Phase 2 | Pending |
+| VER-04 | Phase 2 | Pending |
+| STATUS-01 | Phase 2 | Pending |
+| STATUS-02 | Phase 2 | Pending |
+| STATUS-03 | Phase 2 | Pending |
+| STATUS-04 | Phase 2 | Pending |
+| MAP-01 | Phase 2 | Pending |
+| MAP-02 | Phase 2 | Pending |
+| MAP-03 | Phase 2 | Pending |
+| MAP-04 | Phase 2 | Pending |
+| PLAT-01 | Phase 2 | Pending |
+| PLAT-02 | Phase 2 | Pending |
+| PLAT-03 | Phase 2 | Pending |
+| INST-01 | Phase 3 | Pending |
+| INST-02 | Phase 3 | Pending |
+| INST-03 | Phase 3 | Pending |
+| TEST-01 | Phase 3 | Pending |
+| TEST-02 | Phase 3 | Pending |
+| TEST-03 | Phase 3 | Pending |
+| TEST-04 | Phase 3 | Pending |
+| TEST-05 | Phase 3 | Pending |
+| TEST-06 | Phase 3 | Pending |
+| TEST-07 | Phase 3 | Pending |
 
 **Coverage:**
-- v1 requirements: 37 total
-- Mapped to phases: 37
-- Unmapped: 0 ✓
+- v1 requirements: 53 total (10 categories)
+- Mapped to phases: 53
+- Phase 1: 12 requirements (PATH 5 + BAK 7)
+- Phase 2: 31 requirements (APPLY 10 + EXTRACT 6 + VER 4 + STATUS 4 + MAP 4 + PLAT 3)
+- Phase 3: 10 requirements (INST 3 + TEST 7)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-05*
-*Last updated: 2026-04-05 after initial definition*
+*Last updated: 2026-04-05 after roadmap creation*
