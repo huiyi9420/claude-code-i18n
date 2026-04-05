@@ -4,3 +4,4 @@ __pycache__/
 .DS_Store
 *.bak
 cli.bak.en.js
+.venv/
