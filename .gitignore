@@ -5,3 +5,4 @@ __pycache__/
 *.bak
 cli.bak.en.js
 .venv/
+.spec-workflow/
