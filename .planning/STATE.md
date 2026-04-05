@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v3.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-04-05T11:44:01.837Z"
+last_activity: 2026-04-05
+progress:
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 3
+  completed_plans: 1
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -5,20 +21,21 @@
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** 用户运行一条命令，Claude Code CLI 的全部用户可见界面变成准确、自然的中文，版本更新后自动适配。
-**Current focus:** Phase 1: Foundation & Safety
+**Current focus:** Phase 1 — Foundation & Safety
 
 ## Current Position
 
-Phase: 1 of 3 (Foundation & Safety)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-04-05 — Roadmap created
+Phase: 1 (Foundation & Safety) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-05
 
 Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: -
 - Total execution time: 0 hours
@@ -30,10 +47,12 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: -
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | 5min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -46,6 +65,8 @@ Recent decisions affecting current work:
 - [Phase 0]: 纯 Python 标准库，零外部依赖
 - [Phase 0]: 增强型 regex（非 AST）-- 13MB minified 文件太大不适合 AST
 - [Phase 0]: 在新 git branch 上开发，保留现有代码
+- [Phase 01]: 5-level cascading path detection: env_var > config_file > volta > npm_global > common_path
+- [Phase 01]: validate_cli_dir checks structure + package name only, not content purity
 
 ### Pending Todos
 
@@ -58,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-05
-Stopped at: Roadmap created, ready for Phase 1 planning
+Last session: 2026-04-05T11:44:01.829Z
+Stopped at: Completed 01-01-PLAN.md
 Resume file: None

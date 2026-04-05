@@ -7,11 +7,11 @@
 
 ### Path Resolution (PATH)
 
-- [ ] **PATH-01**: Engine auto-detects CLI installation path via `which claude` symlink resolution
-- [ ] **PATH-02**: Engine supports explicit path via environment variable `CLAUDE_I18N_CLI_DIR`
-- [ ] **PATH-03**: Engine supports config file `~/.claude/i18n.json` with custom `cli_path`
-- [ ] **PATH-04**: Engine validates detected path exists and contains `cli.js` + `package.json`
-- [ ] **PATH-05**: Engine reports clear error message when CLI not found (with install instructions)
+- [x] **PATH-01**: Engine auto-detects CLI installation path via `which claude` symlink resolution
+- [x] **PATH-02**: Engine supports explicit path via environment variable `CLAUDE_I18N_CLI_DIR`
+- [x] **PATH-03**: Engine supports config file `~/.claude/i18n.json` with custom `cli_path`
+- [x] **PATH-04**: Engine validates detected path exists and contains `cli.js` + `package.json`
+- [x] **PATH-05**: Engine reports clear error message when CLI not found (with install instructions)
 
 ### Backup Integrity (BAK)
 
@@ -123,11 +123,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PATH-01 | Phase 1 | Pending |
-| PATH-02 | Phase 1 | Pending |
-| PATH-03 | Phase 1 | Pending |
-| PATH-04 | Phase 1 | Pending |
-| PATH-05 | Phase 1 | Pending |
+| PATH-01 | Phase 1 | Complete |
+| PATH-02 | Phase 1 | Complete |
+| PATH-03 | Phase 1 | Complete |
+| PATH-04 | Phase 1 | Complete |
+| PATH-05 | Phase 1 | Complete |
 | BAK-01 | Phase 1 | Pending |
 | BAK-02 | Phase 1 | Pending |
 | BAK-03 | Phase 1 | Pending |
