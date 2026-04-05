@@ -38,12 +38,12 @@
 
 ### Extract (EXTRACT)
 
-- [ ] **EXTRACT-01**: Extract reads from pristine backup only (never from translated cli.js)
-- [ ] **EXTRACT-02**: Extract uses strong/weak signal indicator system to score candidates
-- [ ] **EXTRACT-03**: Extract filters out code-like strings (identifiers, URLs, protocol keywords)
-- [ ] **EXTRACT-04**: Extract outputs JSON with strong/weak candidates, scores, and occurrence counts
-- [ ] **EXTRACT-05**: Extract correctly excludes already-translated and already-skipped strings
-- [ ] **EXTRACT-06**: Extract never outputs strings containing Chinese characters
+- [x] **EXTRACT-01**: Extract reads from pristine backup only (never from translated cli.js)
+- [x] **EXTRACT-02**: Extract uses strong/weak signal indicator system to score candidates
+- [x] **EXTRACT-03**: Extract filters out code-like strings (identifiers, URLs, protocol keywords)
+- [x] **EXTRACT-04**: Extract outputs JSON with strong/weak candidates, scores, and occurrence counts
+- [x] **EXTRACT-05**: Extract correctly excludes already-translated and already-skipped strings
+- [x] **EXTRACT-06**: Extract never outputs strings containing Chinese characters
 
 ### Version Detection (VER)
 
@@ -61,10 +61,10 @@
 
 ### Translation Map (MAP)
 
-- [ ] **MAP-01**: Translation map uses JSON format with `_meta` header (version, cli_version, description)
-- [ ] **MAP-02**: Map loaded from `~/.claude/scripts/i18n/zh-CN.json` by default
-- [ ] **MAP-03**: Skip words loaded from `~/.claude/scripts/i18n/skip-words.json`
-- [ ] **MAP-04**: Map entries with identical en/zh values are automatically skipped
+- [x] **MAP-01**: Translation map uses JSON format with `_meta` header (version, cli_version, description)
+- [x] **MAP-02**: Map loaded from `~/.claude/scripts/i18n/zh-CN.json` by default
+- [x] **MAP-03**: Skip words loaded from `~/.claude/scripts/i18n/skip-words.json`
+- [x] **MAP-04**: Map entries with identical en/zh values are automatically skipped
 
 ### Cross-Platform (PLATFORM)
 
@@ -145,12 +145,12 @@
 | APPLY-08 | Phase 2 | Complete |
 | APPLY-09 | Phase 2 | Complete |
 | APPLY-10 | Phase 2 | Complete |
-| EXTRACT-01 | Phase 2 | Pending |
-| EXTRACT-02 | Phase 2 | Pending |
-| EXTRACT-03 | Phase 2 | Pending |
-| EXTRACT-04 | Phase 2 | Pending |
-| EXTRACT-05 | Phase 2 | Pending |
-| EXTRACT-06 | Phase 2 | Pending |
+| EXTRACT-01 | Phase 2 | Complete |
+| EXTRACT-02 | Phase 2 | Complete |
+| EXTRACT-03 | Phase 2 | Complete |
+| EXTRACT-04 | Phase 2 | Complete |
+| EXTRACT-05 | Phase 2 | Complete |
+| EXTRACT-06 | Phase 2 | Complete |
 | VER-01 | Phase 2 | Complete |
 | VER-02 | Phase 2 | Complete |
 | VER-03 | Phase 2 | Complete |
@@ -159,10 +159,10 @@
 | STATUS-02 | Phase 2 | Pending |
 | STATUS-03 | Phase 2 | Pending |
 | STATUS-04 | Phase 2 | Pending |
-| MAP-01 | Phase 2 | Pending |
-| MAP-02 | Phase 2 | Pending |
-| MAP-03 | Phase 2 | Pending |
-| MAP-04 | Phase 2 | Pending |
+| MAP-01 | Phase 2 | Complete |
+| MAP-02 | Phase 2 | Complete |
+| MAP-03 | Phase 2 | Complete |
+| MAP-04 | Phase 2 | Complete |
 | PLAT-01 | Phase 2 | Complete |
 | PLAT-02 | Phase 2 | Complete |
 | PLAT-03 | Phase 2 | Pending |
