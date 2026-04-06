@@ -54,10 +54,10 @@
 
 ### Status & Output (STATUS)
 
-- [ ] **STATUS-01**: `status` command outputs JSON with version, localized state, entry count, backup integrity
-- [ ] **STATUS-02**: `version` command outputs current CLI version
-- [ ] **STATUS-03**: All commands output JSON format for script integration
-- [ ] **STATUS-04**: Human-readable summary printed after apply (version, replacements, verification result)
+- [x] **STATUS-01**: `status` command outputs JSON with version, localized state, entry count, backup integrity
+- [x] **STATUS-02**: `version` command outputs current CLI version
+- [x] **STATUS-03**: All commands output JSON format for script integration
+- [x] **STATUS-04**: Human-readable summary printed after apply (version, replacements, verification result)
 
 ### Translation Map (MAP)
 
@@ -70,23 +70,23 @@
 
 - [x] **PLAT-01**: All file paths use `pathlib.Path` (no hardcoded OS-specific separators)
 - [x] **PLAT-02**: No hardcoded user paths — all resolved dynamically
-- [ ] **PLAT-03**: `sed -i` in Hook replacements uses platform-appropriate syntax (macOS vs Linux)
+- [x] **PLAT-03**: `sed -i` in Hook replacements uses platform-appropriate syntax (macOS vs Linux)
 
 ### Installation (INSTALL)
 
-- [ ] **INST-01**: `install.sh` copies engine + map + skip-words + skill command to `~/.claude/`
-- [ ] **INST-02**: Skill command (`commands/zcf/i18n.md`) stays in sync with engine capabilities
-- [ ] **INST-03**: Install script verifies Python 3 and Node.js availability
+- [x] **INST-01**: `install.sh` copies engine + map + skip-words + skill command to `~/.claude/`
+- [x] **INST-02**: Skill command (`commands/zcf/i18n.md`) stays in sync with engine capabilities
+- [x] **INST-03**: Install script verifies Python 3 and Node.js availability
 
 ### Testing (TEST)
 
-- [ ] **TEST-01**: Unit tests for path resolution (mock filesystem)
-- [ ] **TEST-02**: Unit tests for backup manager (hash, purity, atomic write)
-- [ ] **TEST-03**: Unit tests for string scanner (signal scoring, noise filtering)
-- [ ] **TEST-04**: Unit tests for replacement engine (long/medium/short strategies)
-- [ ] **TEST-05**: Unit tests for extract command (candidate scoring)
-- [ ] **TEST-06**: Integration test: apply → verify → restore → verify (full round-trip)
-- [ ] **TEST-07**: Test coverage ≥ 80%
+- [x] **TEST-01**: Unit tests for path resolution (mock filesystem)
+- [x] **TEST-02**: Unit tests for backup manager (hash, purity, atomic write)
+- [x] **TEST-03**: Unit tests for string scanner (signal scoring, noise filtering)
+- [x] **TEST-04**: Unit tests for replacement engine (long/medium/short strategies)
+- [x] **TEST-05**: Unit tests for extract command (candidate scoring)
+- [x] **TEST-06**: Integration test: apply → verify → restore → verify (full round-trip)
+- [x] **TEST-07**: Test coverage ≥ 80%
 
 ## v2 Requirements
 
@@ -155,27 +155,27 @@
 | VER-02 | Phase 2 | Complete |
 | VER-03 | Phase 2 | Complete |
 | VER-04 | Phase 2 | Complete |
-| STATUS-01 | Phase 2 | Pending |
-| STATUS-02 | Phase 2 | Pending |
-| STATUS-03 | Phase 2 | Pending |
-| STATUS-04 | Phase 2 | Pending |
+| STATUS-01 | Phase 2 | Complete |
+| STATUS-02 | Phase 2 | Complete |
+| STATUS-03 | Phase 2 | Complete |
+| STATUS-04 | Phase 2 | Complete |
 | MAP-01 | Phase 2 | Complete |
 | MAP-02 | Phase 2 | Complete |
 | MAP-03 | Phase 2 | Complete |
 | MAP-04 | Phase 2 | Complete |
 | PLAT-01 | Phase 2 | Complete |
 | PLAT-02 | Phase 2 | Complete |
-| PLAT-03 | Phase 2 | Pending |
-| INST-01 | Phase 3 | Pending |
-| INST-02 | Phase 3 | Pending |
-| INST-03 | Phase 3 | Pending |
-| TEST-01 | Phase 3 | Pending |
-| TEST-02 | Phase 3 | Pending |
-| TEST-03 | Phase 3 | Pending |
-| TEST-04 | Phase 3 | Pending |
-| TEST-05 | Phase 3 | Pending |
-| TEST-06 | Phase 3 | Pending |
-| TEST-07 | Phase 3 | Pending |
+| PLAT-03 | Phase 2 | Complete |
+| INST-01 | Phase 3 | Complete |
+| INST-02 | Phase 3 | Complete |
+| INST-03 | Phase 3 | Complete |
+| TEST-01 | Phase 3 | Complete |
+| TEST-02 | Phase 3 | Complete |
+| TEST-03 | Phase 3 | Complete |
+| TEST-04 | Phase 3 | Complete |
+| TEST-05 | Phase 3 | Complete |
+| TEST-06 | Phase 3 | Complete |
+| TEST-07 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 53 total (10 categories)

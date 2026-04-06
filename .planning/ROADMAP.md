@@ -13,8 +13,8 @@
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题 (completed 2026-04-05)
-- [ ] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力
-- [ ] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本
+- [x] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力 (completed 2026-04-05)
+- [x] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本 (completed 2026-04-05)
 
 ## Phase Details
 
@@ -51,7 +51,7 @@ Plans:
 - [x] 02-01-PLAN.md -- Translation Map + Scanner: JSON 映射表加载/校验 + 噪声过滤器 + UI 指标评分 + 字符串扫描器
 - [x] 02-02-PLAN.md -- Replacement Engine: 三级替换策略（长/中/短）+ 逆序替换 + 统计追踪
 - [x] 02-03-PLAN.md -- Verification + Version: node --check 验证 + 回滚 + 版本检测 + 版本变更处理
-- [ ] 02-04-PLAN.md -- Commands + CLI Integration: apply/extract/status 命令实现 + CLI 路由更新
+- [x] 02-04-PLAN.md -- Commands + CLI Integration: apply/extract/status 命令实现 + CLI 路由更新
 
 ### Phase 3: Integration & Quality
 **Goal**: 用户可以通过安装脚本一键部署汉化工具，且工具经过完整测试覆盖，达到可发布质量
@@ -65,9 +65,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 03-01: Installation Script -- install.sh + 技能命令同步 + 环境检查
-- [ ] 03-02: Unit Tests -- 路径/备份/扫描/替换/提取各模块单元测试
-- [ ] 03-03: Integration Tests + Coverage -- 端到端往返测试 + 覆盖率验证
+- [x] 03-01: Installation Script -- install.sh + 技能命令同步 + 环境检查
+- [x] 03-02: Unit Tests -- 路径/备份/扫描/替换/提取各模块单元测试
+- [x] 03-03: Integration Tests + Coverage -- 端到端往返测试 + 覆盖率验证
 
 ## Progress
 
@@ -77,5 +77,5 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Safety | 0/3 | Complete    | 2026-04-05 |
-| 2. Core Engine | 0/4 | Not started | - |
-| 3. Integration & Quality | 0/3 | Not started | - |
+| 2. Core Engine | 4/4 | Complete    | 2026-04-05 |
+| 3. Integration & Quality | 3/3 | Complete    | 2026-04-05 |

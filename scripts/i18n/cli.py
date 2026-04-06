@@ -4,7 +4,7 @@ Provides:
 - output_json / output_error: JSON output utilities (stdout/stderr)
 - get_cli_dir: CLI installation path resolution with error handling
 - build_parser: argparse subcommand router
-- cmd_status / cmd_version: Phase 1 commands
+- cmd_version: Version command
 - main: Entry point called by engine.py
 """
 
@@ -64,7 +64,7 @@ def get_cli_dir() -> Optional[Path]:
 def build_parser() -> argparse.ArgumentParser:
     """Build argparse parser with subcommands.
 
-    Subcommands: status, restore, version, apply (skeleton), extract (skeleton).
+    Subcommands: status, restore, version, apply, extract.
     subparsers.required = True (Pitfall 7 from RESEARCH.md).
     """
     parser = argparse.ArgumentParser(
@@ -74,75 +74,13 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest='command', help='Available commands')
     sub.required = True
 
-    # Phase 1: fully implemented commands
     sub.add_parser('status', help='Show current i18n status')
     sub.add_parser('restore', help='Restore original English CLI')
     sub.add_parser('version', help='Show CLI version')
-
-    # Phase 2: skeleton commands
     sub.add_parser('apply', help='Apply Chinese localization')
     sub.add_parser('extract', help='Extract translatable strings')
 
     return parser
-
-
-def cmd_status() -> None:
-    """Show current i18n status as JSON.
-
-    Output fields:
-    - ok: bool
-    - cli_found: bool
-    - version: str (from package.json or "unknown")
-    - backup_exists: bool
-    - backup_valid: bool (if backup exists)
-    - detection_method: str (how CLI was found)
-    """
-    cli_dir, method = find_cli_install_dir()
-    if cli_dir is None:
-        output_json({
-            "ok": False,
-            "cli_found": False,
-            "version": "unknown",
-            "backup_exists": False,
-            "error": "Claude Code CLI not found",
-            "hint": "Install Claude Code first: npm install -g @anthropic-ai/claude-code",
-        })
-        return
-
-    # Read version from package.json
-    version = "unknown"
-    pkg_json = cli_dir / 'package.json'
-    if pkg_json.exists():
-        try:
-            meta = json.loads(pkg_json.read_text(encoding='utf-8'))
-            version = meta.get('version', 'unknown')
-        except (json.JSONDecodeError, OSError):
-            pass
-
-    # Check backup status
-    from scripts.i18n.config.constants import BACKUP_NAME, HASH_NAME
-    backup_path = cli_dir / BACKUP_NAME
-    hash_path = cli_dir / HASH_NAME
-    backup_exists = backup_path.exists()
-
-    result = {
-        "ok": True,
-        "cli_found": True,
-        "version": version,
-        "backup_exists": backup_exists,
-        "cli_dir": str(cli_dir),
-        "detection_method": method,
-    }
-
-    if backup_exists:
-        from scripts.i18n.io.backup import BackupManager
-        bm = BackupManager(cli_dir)
-        integrity = bm._verify_integrity()
-        result["backup_valid"] = integrity
-        if hash_path.exists():
-            result["backup_hash"] = hash_path.read_text(encoding='utf-8').strip()[:16] + "..."
-
-    output_json(result)
 
 
 def cmd_version() -> None:
@@ -164,16 +102,6 @@ def cmd_version() -> None:
     output_json({"ok": True, "version": version})
 
 
-def cmd_apply() -> None:
-    """Skeleton: Apply Chinese localization (Phase 2)."""
-    output_error("not implemented in this version", exit_code=1)
-
-
-def cmd_extract() -> None:
-    """Skeleton: Extract translatable strings (Phase 2)."""
-    output_error("not implemented in this version", exit_code=1)
-
-
 def main() -> None:
     """Main entry point: parse args and route to subcommand."""
     parser = build_parser()
@@ -181,6 +109,9 @@ def main() -> None:
 
     # Import command handlers
     from scripts.i18n.commands.restore import cmd_restore
+    from scripts.i18n.commands.apply import cmd_apply
+    from scripts.i18n.commands.extract import cmd_extract
+    from scripts.i18n.commands.status import cmd_status
 
     commands = {
         'status': cmd_status,

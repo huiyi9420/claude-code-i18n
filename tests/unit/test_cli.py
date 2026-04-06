@@ -129,9 +129,9 @@ class TestStatusCommand:
 
     def test_status_with_cli(self, mock_cli_dir, capsys):
         """Status should output JSON with cli_found, version, backup_exists."""
-        from scripts.i18n.cli import cmd_status
+        from scripts.i18n.commands.status import cmd_status
 
-        with patch('scripts.i18n.cli.find_cli_install_dir', return_value=(mock_cli_dir, 'test')):
+        with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(mock_cli_dir, 'test')):
             cmd_status()
         captured = capsys.readouterr()
         result = json.loads(captured.out)
@@ -142,9 +142,9 @@ class TestStatusCommand:
 
     def test_status_no_cli(self, capsys):
         """Status without CLI should output error JSON."""
-        from scripts.i18n.cli import cmd_status
+        from scripts.i18n.commands.status import cmd_status
 
-        with patch('scripts.i18n.cli.find_cli_install_dir', return_value=(None, 'not_found')):
+        with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(None, 'not_found')):
             cmd_status()
         captured = capsys.readouterr()
         result = json.loads(captured.out)
