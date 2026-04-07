@@ -32,7 +32,7 @@
 Plans:
 - [x] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
 - [x] 04-02-PLAN.md — 上下文感知替换引擎
-- [ ] 04-03-PLAN.md — extract 组件来源标注
+- [x] 04-03-PLAN.md — extract 组件来源标注
 
 ### Phase 5: 翻译扩充与质量保障
 
@@ -53,7 +53,7 @@ Plans:
 
 Plans:
 - [x] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
-- [ ] 04-02-PLAN.md — 上下文感知替换引擎
+- [x] 04-02-PLAN.md — 上下文感知替换引擎
 - [ ] 04-03-PLAN.md — extract 组件来源标注
 
 ### Phase 6: CI 覆盖率回归检测
@@ -73,7 +73,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
+- [x] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
 - [ ] 04-02-PLAN.md — 上下文感知替换引擎
 - [ ] 04-03-PLAN.md — extract 组件来源标注
 
