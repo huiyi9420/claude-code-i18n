@@ -26,7 +26,7 @@ class TestStatusEnhancedFields:
         map_file.write_text(json.dumps(map_data, ensure_ascii=False), encoding='utf-8')
 
         with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(mock_cli_dir, 'test')):
-            with patch('scripts.i18n.commands.status._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.status.get_data_dir', return_value=tmp_path):
                 cmd_status()
 
         captured = capsys.readouterr()
@@ -51,7 +51,7 @@ class TestStatusEnhancedFields:
         map_file.write_text(json.dumps(map_data), encoding='utf-8')
 
         with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(mock_cli_dir, 'test')):
-            with patch('scripts.i18n.commands.status._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.status.get_data_dir', return_value=tmp_path):
                 cmd_status()
 
         captured = capsys.readouterr()
@@ -93,7 +93,7 @@ class TestStatusBackupInfo:
         map_file.write_text(json.dumps(map_data), encoding='utf-8')
 
         with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(mock_cli_dir, 'test')):
-            with patch('scripts.i18n.commands.status._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.status.get_data_dir', return_value=tmp_path):
                 cmd_status()
 
         captured = capsys.readouterr()

@@ -56,7 +56,7 @@ class TestApplyNoMap:
 
         # Patch _SCRIPTS_DIR to point to tmp_path (no zh-CN.json there)
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=tmp_path):
                 with pytest.raises(SystemExit) as exc_info:
                     cmd_apply()
                 assert exc_info.value.code == 1
@@ -85,7 +85,7 @@ class TestApplySuccessFlow:
         skip_file.write_text('{"skip": []}', encoding='utf-8')
 
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.apply.handle_version_change') as mock_ver:
                     mock_ver.return_value = {"changed": False, "old": "2.1.92", "new": "2.1.92"}
 
@@ -122,7 +122,7 @@ class TestApplyRollbackOnVerifyFail:
         skip_file.write_text('{"skip": []}', encoding='utf-8')
 
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.apply.handle_version_change') as mock_ver:
                     mock_ver.return_value = {"changed": False}
 
@@ -163,7 +163,7 @@ class TestApplyVersionChange:
         skip_file.write_text('{"skip": []}', encoding='utf-8')
 
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.apply.handle_version_change') as mock_ver:
                     mock_ver.return_value = {"changed": True, "old": "2.1.90", "new": "2.1.92", "backup_recreated": True}
 

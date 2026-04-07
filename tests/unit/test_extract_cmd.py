@@ -35,7 +35,7 @@ class TestExtractReadsBackup:
 
         # No existing translation map
         with patch('scripts.i18n.commands.extract.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.extract._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.extract.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.extract.scan_candidates') as mock_scan:
                     mock_scan.return_value = [
                         {"en": "Permission denied", "count": 1, "score": 3, "type": "strong"},
@@ -63,7 +63,7 @@ class TestExtractOutputFormat:
         bm.ensure_backup()
 
         with patch('scripts.i18n.commands.extract.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.extract._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.extract.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.extract.scan_candidates') as mock_scan:
                     mock_scan.return_value = [
                         {"en": "Permission denied", "count": 1, "score": 3, "type": "strong"},
@@ -105,7 +105,7 @@ class TestExtractExcludesExisting:
         map_file.write_text(json.dumps(map_data, ensure_ascii=False), encoding='utf-8')
 
         with patch('scripts.i18n.commands.extract.get_cli_dir', return_value=mock_cli_dir):
-            with patch('scripts.i18n.commands.extract._SCRIPTS_DIR', tmp_path):
+            with patch('scripts.i18n.commands.extract.get_data_dir', return_value=tmp_path):
                 with patch('scripts.i18n.commands.extract.scan_candidates') as mock_scan:
                     mock_scan.return_value = []
 

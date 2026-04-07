@@ -71,7 +71,7 @@ class TestApplyRestoreRoundTrip:
 
         # === Step 1: Apply translations ===
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', map_dir):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=map_dir):
                 with patch('scripts.i18n.commands.apply.handle_version_change', return_value={"changed": False}):
                     with patch('scripts.i18n.commands.apply.verify_syntax', return_value={"ok": True, "error": None}):
                         cmd_apply()
@@ -94,7 +94,7 @@ class TestApplyRestoreRoundTrip:
 
         # === Step 2: Check status (should show localized) ===
         with patch('scripts.i18n.config.paths.find_cli_install_dir', return_value=(cli_dir, 'test')):
-            with patch('scripts.i18n.commands.status._SCRIPTS_DIR', map_dir):
+            with patch('scripts.i18n.commands.status.get_data_dir', return_value=map_dir):
                 cmd_status()
 
         captured = capsys.readouterr()
@@ -128,7 +128,7 @@ class TestApplyRestoreRoundTrip:
         cli_js = cli_dir / 'cli.js'
 
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', map_dir):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=map_dir):
                 with patch('scripts.i18n.commands.apply.handle_version_change', return_value={"changed": False}):
                     with patch('scripts.i18n.commands.apply.verify_syntax', return_value={"ok": True, "error": None}):
                         # First apply
@@ -160,7 +160,7 @@ class TestBackupIntegrity:
         map_dir = integration_env["map_dir"]
 
         with patch('scripts.i18n.commands.apply.get_cli_dir', return_value=cli_dir):
-            with patch('scripts.i18n.commands.apply._SCRIPTS_DIR', map_dir):
+            with patch('scripts.i18n.commands.apply.get_data_dir', return_value=map_dir):
                 with patch('scripts.i18n.commands.apply.handle_version_change', return_value={"changed": False}):
                     with patch('scripts.i18n.commands.apply.verify_syntax', return_value={"ok": True, "error": None}):
                         cmd_apply()
