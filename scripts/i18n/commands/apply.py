@@ -27,9 +27,8 @@ from scripts.i18n.io.translation_map import load_translation_map, load_skip_word
 from scripts.i18n.core.replacer import apply_translations
 from scripts.i18n.core.verifier import verify_syntax
 from scripts.i18n.core.version import handle_version_change, get_cli_version
+from scripts.i18n.config.paths import get_data_dir
 
-# Default paths for translation data (scripts/ directory)
-_SCRIPTS_DIR = Path(__file__).resolve().parent.parent.parent.parent  # scripts/
 
 
 def cmd_apply() -> None:
@@ -37,8 +36,8 @@ def cmd_apply() -> None:
     cli_dir = get_cli_dir()
 
     # Load translation data
-    map_path = _SCRIPTS_DIR / MAP_FILE
-    skip_path = _SCRIPTS_DIR / SKIP_FILE
+    map_path = get_data_dir() / MAP_FILE
+    skip_path = get_data_dir() / SKIP_FILE
 
     if not map_path.exists():
         output_error(f"Translation map not found: {map_path}")

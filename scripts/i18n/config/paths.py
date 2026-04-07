@@ -87,6 +87,36 @@ def find_cli_install_dir() -> Tuple[Optional[Path], str]:
     return None, 'not_found'
 
 
+def get_data_dir() -> Path:
+    """Resolve the data directory containing zh-CN.json and other data files.
+
+    Development: <project_root>/scripts/ (contains zh-CN.json directly)
+    Installed:  ~/.claude/scripts/i18n/ (contains zh-CN.json)
+
+    Returns:
+        Path to the directory containing data files.
+    """
+    here = Path(__file__).resolve()
+
+    # Candidate 1: development layout — <project_root>/scripts/
+    dev_scripts = here.parent.parent.parent.parent / 'scripts'
+    if (dev_scripts / 'zh-CN.json').exists():
+        return dev_scripts
+
+    # Candidate 2: installed layout — ~/.claude/scripts/i18n/
+    install_dir = here.parent.parent
+    if (install_dir / 'zh-CN.json').exists():
+        return install_dir
+
+    # Candidate 3: ~/.claude/scripts/i18n/ via home
+    home_i18n = Path.home() / '.claude' / 'scripts' / 'i18n'
+    if (home_i18n / 'zh-CN.json').exists():
+        return home_i18n
+
+    # Fallback: development layout
+    return dev_scripts
+
+
 def validate_cli_dir(p: Path) -> bool:
     """Verify directory is a valid Claude Code installation.
 

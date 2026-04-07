@@ -9,10 +9,8 @@ from pathlib import Path
 
 from scripts.i18n.cli import output_json
 from scripts.i18n.config.constants import MAP_FILE, BACKUP_NAME, HASH_NAME
+from scripts.i18n.config.paths import get_data_dir
 from scripts.i18n.io.translation_map import load_translation_map
-
-# Default paths for translation data (scripts/ directory)
-_SCRIPTS_DIR = Path(__file__).resolve().parent.parent.parent.parent  # scripts/
 
 # Markers to detect localization (Chinese strings present in cli.js)
 _LOCALIZATION_MARKERS = ["绕过权限", "规划模式", "自动模式", "接受编辑"]
@@ -89,7 +87,7 @@ def cmd_status() -> None:
             result["localized"] = False
 
     # Translation map info (STATUS-01)
-    map_path = _SCRIPTS_DIR / MAP_FILE
+    map_path = get_data_dir() / MAP_FILE
     if map_path.exists():
         try:
             map_data = load_translation_map(map_path)

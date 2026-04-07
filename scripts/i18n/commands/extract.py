@@ -11,13 +11,12 @@ from pathlib import Path
 
 from scripts.i18n.cli import get_cli_dir, output_json, output_error
 from scripts.i18n.config.constants import MAP_FILE, SKIP_FILE
+from scripts.i18n.config.paths import get_data_dir
 from scripts.i18n.io.backup import BackupManager
 from scripts.i18n.io.translation_map import load_translation_map, load_skip_words
 from scripts.i18n.core.scanner import scan_candidates
 from scripts.i18n.filters.noise_filter import NOISE_RE
 
-# Default paths for translation data (scripts/ directory)
-_SCRIPTS_DIR = Path(__file__).resolve().parent.parent.parent.parent  # scripts/
 
 
 def cmd_extract() -> None:
@@ -25,8 +24,8 @@ def cmd_extract() -> None:
     cli_dir = get_cli_dir()
 
     # Load translation data
-    map_path = _SCRIPTS_DIR / MAP_FILE
-    skip_path = _SCRIPTS_DIR / SKIP_FILE
+    map_path = get_data_dir() / MAP_FILE
+    skip_path = get_data_dir() / SKIP_FILE
 
     existing = set()
     if map_path.exists():
