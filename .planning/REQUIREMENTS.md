@@ -8,8 +8,8 @@
 
 ### Coverage — 翻译覆盖率提升
 
-- [ ] **COV-01**: 翻译条目数 ≥ 2,500（当前 1,301），覆盖用户可见的高频 UI 字符串
-- [ ] **COV-02**: 总体翻译覆盖率 ≥ 80%（当前 48.0%，按 coverage 命令统计）
+- [x] **COV-01**: 翻译条目数 ≥ 2,500（当前 1,301），覆盖用户可见的高频 UI 字符串
+- [x] **COV-02**: 总体翻译覆盖率 ≥ 80%（当前 48.0%，按 coverage 命令统计）
 - [x] **COV-03**: 用户高频可见字符串覆盖率 ≥ 95%（score ≥ 2 的候选全部翻译）
 - [ ] **COV-04**: CI 翻译覆盖率回归检测 — PR 不允许覆盖率低于主分支
 
@@ -34,8 +34,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COV-01 | Phase 5 | Pending |
-| COV-02 | Phase 5 | Pending |
+| COV-01 | Phase 5 | Complete |
+| COV-02 | Phase 5 | Complete |
 | COV-03 | Phase 5 | Complete |
 | COV-04 | Phase 6 | Pending |
 | CTX-01 | Phase 4 | Complete |
