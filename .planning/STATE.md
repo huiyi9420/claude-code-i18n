@@ -1,16 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.1
-milestone_name: 翻译增强
-status: roadmap_created
-stopped_at: Roadmap created, awaiting plan-phase
-last_updated: "2026-04-07T17:30:00Z"
+milestone: v3.0
+milestone_name: milestone
+status: executing
+last_updated: "2026-04-07T09:59:50.798Z"
 last_activity: 2026-04-07
 progress:
   total_phases: 3
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,14 +20,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** 用户运行一条命令，Claude Code CLI 的全部用户可见界面变成准确、自然的中文，版本更新后自动适配。
-**Current focus:** v3.1 — 翻译增强
+**Current focus:** Phase 04 — 上下文感知架构
 
 ## Current Position
 
 Milestone: v3.1 — 翻译增强
-Phase: Phase 4（上下文感知架构）
-Status: Roadmap created, ready for planning
-Last activity: 2026-04-07 — Roadmap created (3 phases, 8 requirements)
+Phase: 04 (上下文感知架构) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-07
 
 Progress: [░░░░░░░░░░░░░░] 0%
 
@@ -57,6 +57,10 @@ Progress: [░░░░░░░░░░░░░░] 0%
 - [v3.1 roadmap]: 上下文感知架构先于翻译扩充 — 避免在旧架构上做大量翻译后又要迁移格式
 - [v3.1 roadmap]: CTX-04 质量验证归入 Phase 5 — 验证需要大量翻译条目才有实际意义
 - [v3.1 roadmap]: COV-04 CI 回归独立为 Phase 6 — 覆盖率达标后才有回归基线
+- [Phase 04]: load_translation_map 返回三层结构：meta + translations(展平) + raw_translations(完整 v6)
+- [Phase 04]: resolve_translation 按 context_tags 顺序匹配，先匹配先返回
+- [Phase 04]: billing 模式不含 token，避免与 auth 歧义
+- [Phase 04]: 上下文检测 build-once-query-many 模式，13MB 文件不可每次重新扫描
 
 ### Blockers/Concerns
 

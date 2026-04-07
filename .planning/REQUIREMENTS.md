@@ -15,7 +15,7 @@
 
 ### Context — 上下文感知翻译
 
-- [ ] **CTX-01**: 翻译映射表支持上下文标签（同一英文在不同组件可有不同中文翻译）
+- [x] **CTX-01**: 翻译映射表支持上下文标签（同一英文在不同组件可有不同中文翻译）
 - [ ] **CTX-02**: 替换引擎解析上下文标签，按优先级选择翻译（精确上下文 > 全局默认）
 - [ ] **CTX-03**: extract 命令标注候选字符串的组件来源（file/section/function 级别）
 - [ ] **CTX-04**: 翻译质量验证机制 — 自动检测中英混杂、同义不一致、格式占位符丢失
@@ -38,7 +38,7 @@
 | COV-02 | Phase 5 | Pending |
 | COV-03 | Phase 5 | Pending |
 | COV-04 | Phase 6 | Pending |
-| CTX-01 | Phase 4 | Pending |
+| CTX-01 | Phase 4 | Complete |
 | CTX-02 | Phase 4 | Pending |
 | CTX-03 | Phase 4 | Pending |
 | CTX-04 | Phase 5 | Pending |
