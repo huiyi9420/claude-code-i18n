@@ -65,8 +65,8 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 03-01-PLAN.md -- Coverage 子命令: 新增 coverage 命令 + 表格输出 + 按类别分组 + 单元测试
-- [ ] 03-02-PLAN.md -- 安装脚本 + CI: install.sh 增强 + 技能命令同步 + GitHub Actions CI
+- [x] 03-01-PLAN.md -- Coverage 子命令: 新增 coverage 命令 + 表格输出 + 按类别分组 + 单元测试
+- [x] 03-02-PLAN.md -- 安装脚本 + CI: install.sh 增强 + 技能命令同步 + GitHub Actions CI
 - [ ] 03-03-PLAN.md -- 端到端验证 + 发布: roundtrip 测试增强 + coverage 集成测试 + 发布检查清单
 
 ## Progress
@@ -78,4 +78,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Foundation & Safety | 3/3 | Complete    | 2026-04-05 |
 | 2. Core Engine | 4/4 | Complete    | 2026-04-05 |
-| 3. Integration & Quality | 0/3 | In Progress | — |
+| 3. Integration & Quality | 2/3 | In Progress | — |
