@@ -81,6 +81,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser('extract', help='Extract translatable strings')
     sub.add_parser('auto-update', help='One-click: detect, translate, apply')
     sub.add_parser('coverage', help='Show translation coverage report')
+    sub.add_parser('validate', help='Validate translation quality')
 
     return parser
 
@@ -116,6 +117,7 @@ def main() -> None:
     from scripts.i18n.commands.status import cmd_status
     from scripts.i18n.commands.auto_update import cmd_auto_update
     from scripts.i18n.commands.coverage import cmd_coverage
+    from scripts.i18n.commands.validate import cmd_validate
 
     commands = {
         'status': cmd_status,
@@ -125,6 +127,7 @@ def main() -> None:
         'extract': cmd_extract,
         'auto-update': cmd_auto_update,
         'coverage': cmd_coverage,
+        'validate': cmd_validate,
     }
 
     cmd_func = commands.get(args.command)
