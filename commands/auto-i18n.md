@@ -36,6 +36,7 @@ cli_dir=$(dirname "$(find ~/.volta/tools/image/packages/@anthropic-ai/claude-cod
 | restore | 恢复英文原文 |
 | status | 查看汉化状态 |
 | auto-update | 自我进化：自动提取->规则翻译->合并->应用（一键完成） |
+| coverage | 查看翻译覆盖率报告 |
 
 ---
 
@@ -209,6 +210,16 @@ python3 ~/.claude/scripts/engine.py status
 - 映射表条目数
 - 映射表对应的 CLI 版本
 - 备份文件状态
+
+---
+
+### coverage 流程
+
+```bash
+python3 ~/.claude/scripts/engine.py coverage
+```
+
+输出翻译覆盖率表格和 JSON 数据，显示已翻译/未翻译/跳过的条目数量和百分比，按字符串长度（长>20/中10-20/短<10）分组显示覆盖率。
 
 ---
 

@@ -88,7 +88,7 @@ for f in __init__.py noise_filter.py ui_indicator.py; do
     cp "${SCRIPT_DIR}/scripts/i18n/filters/${f}" "${TARGET_DIR}/filters/"
 done
 
-for f in __init__.py apply.py extract.py status.py restore.py auto_update.py; do
+for f in __init__.py apply.py extract.py status.py restore.py auto_update.py coverage.py; do
     cp "${SCRIPT_DIR}/scripts/i18n/commands/${f}" "${TARGET_DIR}/commands/"
 done
 
@@ -137,6 +137,7 @@ for f in \
     "${TARGET_DIR}/commands/status.py" \
     "${TARGET_DIR}/commands/restore.py" \
     "${TARGET_DIR}/commands/auto_update.py" \
+    "${TARGET_DIR}/commands/coverage.py" \
     "${TARGET_DIR}/zh-CN.json" \
     "${TARGET_DIR}/skip-words.json" \
     "${TARGET_DIR}/auto-translate-dict.json" \
