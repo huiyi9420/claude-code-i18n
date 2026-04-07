@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题 (completed 2026-04-05)
 - [x] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力 (completed 2026-04-05)
-- [x] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本 (completed 2026-04-05)
+- [ ] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本
 
 ## Phase Details
 
@@ -59,15 +59,15 @@ Plans:
 **Requirements**: INST-01, INST-02, INST-03, TEST-01, TEST-02, TEST-03, TEST-04, TEST-05, TEST-06, TEST-07
 **Success Criteria** (what must be TRUE):
   1. 用户运行 `bash install.sh` 后，引擎、翻译映射表、跳过词表、技能命令全部安装到 `~/.claude/` 目录，安装前自动检查 Python 3 和 Node.js 是否可用
-  2. 安装后用户通过技能命令（zcf/i18n.md）能调用完整的汉化/恢复/提取/状态功能，技能命令描述与引擎实际能力一致
-  3. 路径解析、备份管理、字符串扫描、替换引擎、提取命令均有对应单元测试，总测试覆盖率 >= 80%
+  2. 安装后用户通过技能命令（auto-i18n.md）能调用完整的汉化/恢复/提取/状态/覆盖率功能，技能命令描述与引擎实际能力一致
+  3. 路径解析、备份管理、字符串扫描、替换引擎、提取命令、覆盖率命令均有对应单元测试，总测试覆盖率 >= 80%
   4. 完整的 apply -> verify -> restore -> verify 往返测试通过，确认汉化和恢复的端到端正确性
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [x] 03-01: Installation Script -- install.sh + 技能命令同步 + 环境检查
-- [x] 03-02: Unit Tests -- 路径/备份/扫描/替换/提取各模块单元测试
-- [x] 03-03: Integration Tests + Coverage -- 端到端往返测试 + 覆盖率验证
+- [ ] 03-01-PLAN.md -- Coverage 子命令: 新增 coverage 命令 + 表格输出 + 按类别分组 + 单元测试
+- [ ] 03-02-PLAN.md -- 安装脚本 + CI: install.sh 增强 + 技能命令同步 + GitHub Actions CI
+- [ ] 03-03-PLAN.md -- 端到端验证 + 发布: roundtrip 测试增强 + coverage 集成测试 + 发布检查清单
 
 ## Progress
 
@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Safety | 0/3 | Complete    | 2026-04-05 |
+| 1. Foundation & Safety | 3/3 | Complete    | 2026-04-05 |
 | 2. Core Engine | 4/4 | Complete    | 2026-04-05 |
-| 3. Integration & Quality | 3/3 | Complete    | 2026-04-05 |
+| 3. Integration & Quality | 0/3 | In Progress | — |
