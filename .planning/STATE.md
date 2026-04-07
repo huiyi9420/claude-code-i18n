@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-07T09:59:50.798Z"
+last_updated: "2026-04-07T10:12:39.928Z"
 last_activity: 2026-04-07
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 
 Milestone: v3.1 — 翻译增强
 Phase: 04 (上下文感知架构) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-04-07
 
@@ -61,6 +61,8 @@ Progress: [░░░░░░░░░░░░░░] 0%
 - [Phase 04]: resolve_translation 按 context_tags 顺序匹配，先匹配先返回
 - [Phase 04]: billing 模式不含 token，避免与 auth 歧义
 - [Phase 04]: 上下文检测 build-once-query-many 模式，13MB 文件不可每次重新扫描
+- [Phase 04]: pre-plan 替换架构: 先在原始 content 上收集所有匹配位置，过滤重叠，再统一逆序替换
+- [Phase 04]: lazy import context_detector: 仅在有上下文条目时加载，避免循环导入
 
 ### Blockers/Concerns
 
