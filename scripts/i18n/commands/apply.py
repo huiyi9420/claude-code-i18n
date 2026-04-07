@@ -28,6 +28,7 @@ from scripts.i18n.core.replacer import apply_translations
 from scripts.i18n.core.verifier import verify_syntax
 from scripts.i18n.core.version import handle_version_change, get_cli_version
 from scripts.i18n.config.paths import get_data_dir
+from scripts.i18n.core.context_detector import build_context_index
 
 
 
@@ -46,6 +47,7 @@ def cmd_apply() -> None:
     map_data = load_translation_map(map_path)
     skip_words = load_skip_words(skip_path) if skip_path.exists() else set()
     translations = map_data["translations"]
+    raw_translations = map_data.get("raw_translations", {})
 
     # Version change detection (VER-01~04)
     version_result = handle_version_change(cli_dir, map_data["meta"])
@@ -73,8 +75,15 @@ def cmd_apply() -> None:
     cli_js = cli_dir / 'cli.js'
     content = cli_js.read_text(encoding='utf-8')
 
-    # Apply translations
-    modified, stats = apply_translations(content, translations, skip_words)
+    # Build context index only when there may be context-tagged entries
+    context_index = build_context_index(content) if raw_translations else None
+
+    # Apply translations (context-aware when context_index is available)
+    modified, stats = apply_translations(
+        content, translations, skip_words,
+        raw_translations=raw_translations,
+        context_index=context_index,
+    )
 
     # Write via atomic operation
     atomic_write_text(cli_js, modified)
