@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-04-07T10:53:58.384Z"
-last_activity: 2026-04-07 -- Phase 05 execution started
+last_updated: "2026-04-07T11:02:37.262Z"
+last_activity: 2026-04-07
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-04-07)
 
 Milestone: v3.1 — 翻译增强
 Phase: 05 (翻译扩充与质量保障) — EXECUTING
-Plan: 1 of 3
-Status: Executing Phase 05
-Last activity: 2026-04-07 -- Phase 05 execution started
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-04-07
 
 Progress: [░░░░░░░░░░░░░░] 0%
 
@@ -66,6 +66,9 @@ Progress: [░░░░░░░░░░░░░░] 0%
 - [Phase 04]: scan_candidates 可选 context_index 参数，向后兼容
 - [Phase 04]: re.finditer 替代 re.findall 保留位置信息用于上下文检测
 - [Phase 04]: contexts 去重排序，无匹配区域返回 ['default']，未启用返回 []
+- [Phase 05]: validate 命令白名单包含 30+ 常见技术缩写，避免中英混杂误报
+- [Phase 05]: 同义不一致使用标准化 canonical key（小写+去标点）检测
+- [Phase 05]: 占位符检测覆盖 printf/template/brace 三种风格
 
 ### Blockers/Concerns
 

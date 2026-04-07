@@ -52,7 +52,7 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — validate 命令：翻译质量验证机制
+- [x] 05-01-PLAN.md — validate 命令：翻译质量验证机制
 - [ ] 05-02-PLAN.md — 高频字符串翻译扩充（score>=2 至 95%）
 - [ ] 05-03-PLAN.md — 长字符串大规模翻译扩充（2,500+ 条目，80%+ 覆盖率）
 
