@@ -13,7 +13,7 @@ from scripts.i18n.io.backup import BackupManager
 
 @pytest.fixture
 def pristine_cli_dir(tmp_path):
-    """Create a CLI dir with pure-English cli.js (no CJK)."""
+    """Create a CLI dir with pure-English cli.js (no localization markers)."""
     cli_dir = tmp_path / 'claude-code'
     cli_dir.mkdir()
     (cli_dir / 'cli.js').write_text(
@@ -29,12 +29,12 @@ def pristine_cli_dir(tmp_path):
 
 
 @pytest.fixture
-def cjk_cli_dir(tmp_path):
-    """Create a CLI dir with Chinese-polluted cli.js."""
+def localized_cli_dir(tmp_path):
+    """Create a CLI dir with localized cli.js (contains our markers)."""
     cli_dir = tmp_path / 'claude-code'
     cli_dir.mkdir()
     (cli_dir / 'cli.js').write_text(
-        'var e={title:"Claude \u4ee3\u7801",msg:"\u6743\u9650\u88ab\u62d2\u7edd"};',
+        'var e={title:"Claude Code",绕过权限:"yes",规划模式:"active",自动模式:"on",接受编辑:"ok"};',
         encoding='utf-8',
     )
     (cli_dir / 'package.json').write_text(
@@ -79,11 +79,12 @@ class TestCreatePristineBackup:
         assert result['ok'] is True
         assert result['action'] == 'existing_valid'
 
-    def test_polluted_backup_renamed(self, pristine_cli_dir):
-        """Existing CJK-polluted backup is renamed to .polluted.js."""
+    def test_localized_backup_renamed(self, pristine_cli_dir):
+        """Existing localized backup is renamed to .polluted.js."""
         backup = pristine_cli_dir / BACKUP_NAME
+        # Write a backup containing our localization markers
         backup.write_text(
-            'var polluted = "\u6c61\u67d3\u7684\u5185\u5bb9";',
+            'var e={绕过权限:"yes",规划模式:"active"};',
             encoding='utf-8',
         )
 
@@ -93,14 +94,14 @@ class TestCreatePristineBackup:
         assert result['ok'] is True
         assert result['action'] == 'created'
 
-        # Old polluted backup should be renamed
+        # Old localized backup should be renamed
         polluted = pristine_cli_dir / 'cli.bak.polluted.js'
         assert polluted.exists()
-        assert '\u6c61\u67d3' in polluted.read_text(encoding='utf-8')
+        assert '绕过权限' in polluted.read_text(encoding='utf-8')
 
-        # New backup should be clean
+        # New backup should be clean (no markers)
         new_backup = pristine_cli_dir / BACKUP_NAME
-        assert '\u6c61\u67d3' not in new_backup.read_text(encoding='utf-8')
+        assert '绕过权限' not in new_backup.read_text(encoding='utf-8')
 
 
 class TestSha256Hash:
@@ -149,24 +150,48 @@ class TestHashVerification:
         assert result['error'] == 'hash_mismatch'
 
 
-class TestCjkPurityCheck:
-    """BAK-04: CJK character purity check."""
+class TestLocalizationCheck:
+    """BAK-04: Localization marker detection."""
 
-    def test_cjk_purity_check_reject(self, cjk_cli_dir):
-        """cli.js with Chinese characters returns source_not_pristine error."""
-        mgr = BackupManager(cjk_cli_dir)
+    def test_localized_source_rejected(self, localized_cli_dir):
+        """cli.js with localization markers returns source_not_pristine error."""
+        mgr = BackupManager(localized_cli_dir)
         result = mgr.ensure_backup()
 
         assert result['ok'] is False
         assert result['error'] == 'source_not_pristine'
 
-    def test_cjk_purity_check_accept(self, pristine_cli_dir):
-        """cli.js without CJK characters passes purity check."""
+    def test_clean_source_accepted(self, pristine_cli_dir):
+        """cli.js without localization markers passes check."""
         mgr = BackupManager(pristine_cli_dir)
         result = mgr.ensure_backup()
 
         assert result['ok'] is True
         assert 'error' not in result
+
+    def test_cjk_without_markers_accepted(self, tmp_path):
+        """cli.js with CJK chars but no localization markers passes.
+
+        The original npm package contains ~1841 CJK chars (Japanese from Zod).
+        These should NOT trigger source_not_pristine.
+        """
+        cli_dir = tmp_path / 'claude-code'
+        cli_dir.mkdir()
+        # Japanese CJK from Zod library — should be accepted as pristine
+        (cli_dir / 'cli.js').write_text(
+            'var e={unit:"文字",verb:"である",error:"無効な入力"};',
+            encoding='utf-8',
+        )
+        (cli_dir / 'package.json').write_text(
+            '{"name":"@anthropic-ai/claude-code","version":"2.1.92"}',
+            encoding='utf-8',
+        )
+
+        mgr = BackupManager(cli_dir)
+        result = mgr.ensure_backup()
+
+        assert result['ok'] is True
+        assert result['action'] == 'created'
 
 
 class TestReadonlyProtection:
@@ -201,29 +226,27 @@ class TestReadonlyProtection:
 
 
 class TestRestore:
-    """BAK-07: Restore returns cli.js to pure English."""
+    """BAK-07: Restore returns cli.js to unmodified state."""
 
     def test_restore_purity(self, pristine_cli_dir):
-        """After adding Chinese to cli.js, restore produces zero CJK content."""
+        """After localizing cli.js, restore removes our markers."""
         mgr = BackupManager(pristine_cli_dir)
         mgr.ensure_backup()
 
-        # "Localize" cli.js by adding Chinese
+        # "Localize" cli.js by adding our markers
         cli_js = pristine_cli_dir / 'cli.js'
         cli_js.write_text(
-            'var e={title:"Claude \u4ee3\u7801"};'
-            'console.log("\u4f60\u597d\u4e16\u754c");',
+            'var e={绕过权限:"yes",规划模式:"active",接受编辑:"ok"};',
             encoding='utf-8',
         )
 
         result = mgr.restore()
         assert result['ok'] is True
 
-        # cli.js should have zero CJK characters
+        # cli.js should not contain our markers
         content = cli_js.read_text(encoding='utf-8')
-        import re
-        cjk = re.compile(r'[\u4e00-\u9fff]')
-        assert not cjk.search(content), 'cli.js still contains CJK after restore'
+        assert '绕过权限' not in content
+        assert '规划模式' not in content
 
     def test_restore_no_backup_error(self, pristine_cli_dir):
         """Restore without backup returns no_backup error."""
