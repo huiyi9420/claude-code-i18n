@@ -1,107 +1,108 @@
-# Claude Code CLI 中文汉化工具
+# Claude Code auto-i18n
 
-一键将 Claude Code CLI 终端界面汉化为中文，支持版本更新后自动提取新字符串并翻译。
+一键将 Claude Code CLI 终端界面汉化为中文。CLI 更新后执行 `/auto-i18n` 即可自动重新汉化。
 
 ## 功能特性
 
-- **一键汉化** — `/zcf:i18n` 一条命令完成提取、翻译、应用、验证全流程
-- **版本自适应** — Claude Code 更新后自动提取新增 UI 字符串
-- **AI 智能翻译** — 由 Claude 自动翻译新发现的英文字符串
-- **安全替换** — 三级替换策略 + 语法验证 + 失败自动回滚
-- **可逆操作** — 随时恢复英文原文
+- **一键汉化** — `/auto-i18n` 完成提取、翻译、应用、验证全流程
+- **自我进化** — CLI 更新后 `/auto-i18n auto-update` 自动适配新版本
+- **规则引擎** — 内置 170+ 词典条目 + UI 模板 + 动词模式自动翻译
+- **安全替换** — 三级替换策略 + Hook 替换 + 语法验证 + 失败自动回滚
+- **可逆操作** — `/auto-i18n restore` 随时恢复英文原文
 
 ## 快速开始
 
 ### 安装
 
 ```bash
-# 克隆仓库
-git clone https://github.com/zhaolulu/claude-code-i18n.git
+git clone https://github.com/huiyi9420/claude-code-i18n.git
 cd claude-code-i18n
-
-# 运行安装脚本
 bash install.sh
 ```
 
 ### 使用
 
-在 Claude Code 中使用 `/zcf:i18n` 命令：
+在 Claude Code 中输入：
 
 | 命令 | 功能 |
 |------|------|
-| `/zcf:i18n` | 一键汉化（提取→翻译→应用→验证） |
-| `/zcf:i18n apply` | 应用已有翻译 |
-| `/zcf:i18n restore` | 恢复英文原文 |
-| `/zcf:i18n status` | 查看汉化状态 |
+| `/auto-i18n` | 一键汉化（提取→翻译→应用→验证） |
+| `/auto-i18n auto-update` | CLI 更新后自动重新汉化 |
+| `/auto-i18n restore` | 恢复英文原文 |
+| `/auto-i18n status` | 查看汉化状态 |
 
-### 手动使用（不依赖技能命令）
+### 命令行（不依赖技能命令）
 
 ```bash
-# 应用汉化
-python3 scripts/localize.py apply
-
-# 恢复英文
-python3 scripts/localize.py restore
-
-# 查看状态
-python3 scripts/localize.py status
-
-# 提取新字符串
-python3 scripts/localize.py extract
-```
-
-## 项目结构
-
-```
-claude-code-i18n/
-├── README.md                  # 本文件
-├── install.sh                 # 安装脚本
-├── command/
-│   └── i18n.md                # Claude Code 技能命令定义
-└── scripts/
-    ├── localize.py            # 汉化引擎 v3.0
-    ├── zh-CN.json             # 中英翻译映射表
-    └── skip-words.json        # 用户跳过的字符串列表
+python3 ~/.claude/scripts/engine.py apply       # 应用汉化
+python3 ~/.claude/scripts/engine.py auto-update  # 自我进化
+python3 ~/.claude/scripts/engine.py restore      # 恢复英文
+python3 ~/.claude/scripts/engine.py status       # 查看状态
+python3 ~/.claude/scripts/engine.py extract      # 提取新字符串
 ```
 
 ## 工作原理
 
-### 替换策略
+### 架构
 
-汉化引擎根据字符串长度采用不同替换策略，最大限度避免误替换代码内部逻辑：
+```
+备份(cli.bak.en.js) → 扫描候选字符串 → 规则自动翻译 → AI 翻译剩余
+    → 三级替换(长/中/短) → Hook 替换 → 语法验证 → 写入 cli.js
+```
+
+### 替换策略
 
 | 长度 | 策略 | 说明 |
 |------|------|------|
 | > 20 字符 | 全局替换 | 精度高，误伤概率极低 |
 | 10-20 字符 | 引号上下文替换 | 只替换引号内的出现 |
-| < 10 字符 | 边界感知替换 | 限制替换数量上限 |
+| < 10 字符 | 边界感知替换 | 限制替换数量上限 + skip words |
 
-### 安全机制
+### 自我进化流程
 
-- 每次应用前自动备份英文原文（`cli.bak.en.js`）
-- 应用后执行 `node --check` 语法验证
-- 验证失败自动回滚到英文原文
-- 跳过通用短词（Yes/No/Error 等）避免破坏逻辑
+`auto-update` 一键编排：
 
-### 版本更新流程
+1. 版本变更检测（自动重建备份）
+2. 从纯净备份扫描新字符串
+3. 与上次快照 diff（新增/变更/移除）
+4. 规则引擎自动翻译高置信度字符串
+5. 低置信度字符串标记人工审核
+6. 合并翻译映射表
+7. 应用汉化 + Hook 替换
+8. `node --check` 语法验证（失败自动回滚）
 
-当 Claude Code 更新后：
+## 项目结构
 
-1. `localize.py extract` 从英文备份中提取新的用户可见字符串
-2. 使用强/弱信号关键词过滤，只保留真正的 UI 文本
-3. AI 自动翻译并更新 `zh-CN.json` 映射表
-4. 应用新的翻译并验证
+```
+claude-code-i18n/
+├── commands/
+│   └── auto-i18n.md          # Claude Code 技能命令
+├── scripts/
+│   ├── engine.py              # CLI 入口
+│   ├── zh-CN.json             # 中英翻译映射表
+│   ├── skip-words.json        # 跳过词列表
+│   ├── auto-translate-dict.json # 自动翻译词典
+│   └── i18n/                  # 引擎模块
+│       ├── cli.py             # argparse 子命令路由
+│       ├── config/            # 常量、路径检测
+│       ├── io/                # 备份、文件IO、翻译映射、快照
+│       ├── core/              # 扫描、替换、验证、Hook、自动翻译
+│       ├── filters/           # 噪声过滤、UI 指示器
+│       └── commands/          # apply/extract/status/restore/auto-update
+├── tests/                     # pytest 测试套件
+├── install.sh                 # 安装脚本
+└── README.md
+```
 
 ## 自定义翻译
 
-编辑 `scripts/zh-CN.json` 中的 `translations` 字段即可添加或修改翻译：
+编辑 `~/.claude/scripts/i18n/zh-CN.json` 的 `translations` 字段：
 
 ```json
 {
-  "_meta": { ... },
+  "_meta": { "version": "4.0.0", "cli_version": "2.1.92" },
   "translations": {
-    "English text": "中文翻译",
-    ...
+    "English text": "中文翻译"
   }
 }
 ```
@@ -109,19 +110,28 @@ claude-code-i18n/
 ## 系统要求
 
 - macOS / Linux
-- Python 3.6+
-- Node.js（用于语法验证）
-- Claude Code CLI（通过 Volta 安装）
+- Python 3.8+
+- Node.js（语法验证需要）
+- Claude Code CLI
 
-## 默认路径
+## 故障排除
 
-汉化引擎默认查找以下路径：
+| 问题 | 解决方案 |
+|------|---------|
+| CLI 更新后汉化失效 | `/auto-i18n auto-update` |
+| 想恢复英文 | `/auto-i18n restore` |
+| 找不到 cli.js | 设置 `export CLAUDE_I18N_CLI_DIR=/path/to/cli/dir` |
+| 语法验证失败 | 自动回滚，查看 hooks.py 中的替换规则 |
 
-```
-~/.volta/tools/image/packages/@anthropic-ai/claude-code/lib/node_modules/@anthropic-ai/claude-code/cli.js
-```
+## 贡献
 
-如安装路径不同，需修改 `scripts/localize.py` 中的 `CLI_DIR` 变量。
+欢迎提交 PR！主要贡献方式：
+
+1. **翻译改进** — 修改 `scripts/zh-CN.json` 中的翻译
+2. **词典扩展** — 添加 `scripts/auto-translate-dict.json` 中的短语
+3. **Bug 修复** — 提交 issue 或 PR
+
+开发：`python3 -m pytest tests/ -v` 运行测试套件（192 测试，87% 覆盖率）
 
 ## License
 

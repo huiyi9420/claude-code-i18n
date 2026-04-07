@@ -6,3 +6,13 @@ __pycache__/
 cli.bak.en.js
 .venv/
 .spec-workflow/
+
+# Runtime artifacts
+extract-snapshot.json
+zh-CN.json.bak
+*.coverage
+htmlcov/
+coverage.xml
+
+# Planning workflow
+.planning/
