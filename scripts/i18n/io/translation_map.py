@@ -1,7 +1,8 @@
 """Translation map loader and writer for Claude Code i18n engine.
 
 Loads/saves zh-CN.json translation maps and skip-words.json files.
-Handles both v4 (string values) and v5 (dict values with "zh" key) formats.
+Handles v4 (string values), v5 (dict values with "zh" key), and
+v6 (dict values with "zh" + "contexts") formats.
 """
 
 import json
@@ -17,10 +18,12 @@ def load_translation_map(map_path: Path) -> dict:
         map_path: Path to the translation map JSON file (e.g. zh-CN.json).
 
     Returns:
-        dict with "meta" and "translations" keys.
+        dict with "meta", "translations", and "raw_translations" keys.
         - meta: the _meta object from the file (version, cli_version, etc.)
         - translations: dict mapping English strings to Chinese translations.
-          Dict values (v5 format) are flattened to extract the "zh" key.
+          Dict values (v5/v6 format) are flattened to extract the "zh" key.
+        - raw_translations: dict preserving full v6 structure including
+          contexts. String values are normalized to {"zh": value}.
 
     Raises:
         FileNotFoundError: If map_path does not exist.
@@ -39,17 +42,29 @@ def load_translation_map(map_path: Path) -> dict:
         )
 
     meta = raw.get("_meta", {})
-    raw_translations = raw.get("translations", {})
+    raw_translations_data = raw.get("translations", {})
 
-    # Flatten dict values: {"zh": "..."} -> "..."
+    # Flatten dict values: {"zh": "..."} -> "..." for backward compat
     translations = {}
-    for key, value in raw_translations.items():
+    for key, value in raw_translations_data.items():
         if isinstance(value, dict):
             translations[key] = value.get("zh", "")
         else:
             translations[key] = value
 
-    return {"meta": meta, "translations": translations}
+    # Preserve raw structure: normalize strings to {"zh": value}
+    raw_translations = {}
+    for key, value in raw_translations_data.items():
+        if isinstance(value, dict):
+            raw_translations[key] = value
+        else:
+            raw_translations[key] = {"zh": value}
+
+    return {
+        "meta": meta,
+        "translations": translations,
+        "raw_translations": raw_translations,
+    }
 
 
 def load_skip_words(skip_path: Path) -> set:
@@ -76,14 +91,53 @@ def load_skip_words(skip_path: Path) -> set:
 def save_translation_map(map_path: Path, meta: dict, translations: dict) -> None:
     """Save translation map to JSON file atomically.
 
+    Supports v6 format: if a translation value is a dict (with "zh" and
+    optional "contexts"), it is written as-is. String values are written
+    as plain strings for backward compatibility.
+
     Args:
         map_path: Path to zh-CN.json.
         meta: _meta dict (cli_version, version, etc.).
-        translations: Dict of {english: chinese} pairs.
+        translations: Dict of {english: chinese_str | dict} pairs.
     """
     data = {"_meta": meta, "translations": translations}
     content = json.dumps(data, ensure_ascii=False, indent=2)
     atomic_write_text(map_path, content)
+
+
+def resolve_translation(entry, context_tags: list) -> str:
+    """Resolve the best translation for an entry given context tags.
+
+    Selects the most specific translation by checking context tags in order.
+    The first matching context wins. Falls back to the global "zh" default.
+
+    Args:
+        entry: A translation entry, which can be:
+            - str: plain Chinese string (v4 format)
+            - dict with "zh" key: {"zh": "中文"} (v5 format)
+            - dict with "zh" + "contexts": {"zh": "中文", "contexts": {...}} (v6)
+        context_tags: Ordered list of context tag strings to match.
+            First matching tag wins.
+
+    Returns:
+        The resolved Chinese translation string.
+    """
+    # v4 format: plain string
+    if isinstance(entry, str):
+        return entry
+
+    # v5/v6 format: dict with "zh" key
+    if isinstance(entry, dict):
+        contexts = entry.get("contexts", {})
+        # Check context tags in order; first match wins
+        for tag in context_tags:
+            if tag in contexts:
+                return contexts[tag]
+        # Fallback to global default
+        return entry.get("zh", "")
+
+    # Unknown format: return empty string
+    return ""
 
 
 def merge_translations(
