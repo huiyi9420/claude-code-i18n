@@ -15,6 +15,7 @@ from scripts.i18n.config.paths import get_data_dir
 from scripts.i18n.io.backup import BackupManager
 from scripts.i18n.io.translation_map import load_translation_map, load_skip_words
 from scripts.i18n.core.scanner import scan_candidates
+from scripts.i18n.core.context_detector import build_context_index
 from scripts.i18n.filters.noise_filter import NOISE_RE
 
 
@@ -48,8 +49,11 @@ def cmd_extract() -> None:
     # Read from backup (not cli.js!)
     content = bm.backup.read_text(encoding='utf-8')
 
-    # Scan for candidates
-    candidates = scan_candidates(content, existing, skipped, NOISE_RE)
+    # Build context index for component source detection
+    context_index = build_context_index(content)
+
+    # Scan for candidates with context awareness
+    candidates = scan_candidates(content, existing, skipped, NOISE_RE, context_index=context_index)
 
     # Split into strong/weak buckets (EXTRACT-04)
     strong = [c for c in candidates if c["type"] == "strong"]
