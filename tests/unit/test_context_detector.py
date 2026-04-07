@@ -147,7 +147,7 @@ class TestDetectContext:
             "agent": "agent subagent worker",
             "git": "commit git branch",
             "mode": "plan yolo auto_mode",
-            "billing": "cost usage billing token",
+            "billing": "cost usage billing",
         }
         for expected_tag, content_snippet in test_cases.items():
             index = build_context_index(content_snippet)
