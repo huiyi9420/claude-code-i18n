@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题 (completed 2026-04-05)
 - [x] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力 (completed 2026-04-05)
-- [ ] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本
+- [x] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本 (completed 2026-04-07)
 
 ## Phase Details
 
@@ -67,7 +67,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md -- Coverage 子命令: 新增 coverage 命令 + 表格输出 + 按类别分组 + 单元测试
 - [x] 03-02-PLAN.md -- 安装脚本 + CI: install.sh 增强 + 技能命令同步 + GitHub Actions CI
-- [ ] 03-03-PLAN.md -- 端到端验证 + 发布: roundtrip 测试增强 + coverage 集成测试 + 发布检查清单
+- [x] 03-03-PLAN.md -- 端到端验证 + 发布: roundtrip 测试增强 + coverage 集成测试 + 发布检查清单
 
 ## Progress
 
@@ -78,4 +78,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Foundation & Safety | 3/3 | Complete    | 2026-04-05 |
 | 2. Core Engine | 4/4 | Complete    | 2026-04-05 |
-| 3. Integration & Quality | 2/3 | In Progress | — |
+| 3. Integration & Quality | 3/3 | Complete | 2026-04-07 |
