@@ -52,9 +52,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
-- [x] 04-02-PLAN.md — 上下文感知替换引擎
-- [ ] 04-03-PLAN.md — extract 组件来源标注
+- [ ] 05-01-PLAN.md — validate 命令：翻译质量验证机制
+- [ ] 05-02-PLAN.md — 高频字符串翻译扩充（score>=2 至 95%）
+- [ ] 05-03-PLAN.md — 长字符串大规模翻译扩充（2,500+ 条目，80%+ 覆盖率）
 
 ### Phase 6: CI 覆盖率回归检测
 
@@ -73,9 +73,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [x] 04-01-PLAN.md — 翻译映射表 v6 格式扩展 + 上下文检测模块
-- [ ] 04-02-PLAN.md — 上下文感知替换引擎
-- [ ] 04-03-PLAN.md — extract 组件来源标注
+- [ ] 06-01-PLAN.md — TBD
+- [ ] 06-02-PLAN.md — TBD
+- [ ] 06-03-PLAN.md — TBD
 
 ## Coverage Map
 
@@ -85,9 +85,9 @@ Plans:
 | COV-02 | Phase 5 | Pending |
 | COV-03 | Phase 5 | Pending |
 | COV-04 | Phase 6 | Pending |
-| CTX-01 | Phase 4 | Pending |
-| CTX-02 | Phase 4 | Pending |
-| CTX-03 | Phase 4 | Pending |
+| CTX-01 | Phase 4 | Complete |
+| CTX-02 | Phase 4 | Complete |
+| CTX-03 | Phase 4 | Complete |
 | CTX-04 | Phase 5 | Pending |
 
 **Coverage:** 8/8 requirements mapped (100%)
@@ -99,8 +99,8 @@ Plans:
 | 1. Foundation & Safety | v3.0 | 3/3 | Complete | 2026-04-05 |
 | 2. Core Engine | v3.0 | 4/4 | Complete | 2026-04-05 |
 | 3. Integration & Quality | v3.0 | 3/3 | Complete | 2026-04-07 |
-| 4. 上下文感知架构 | v3.1 | 0/? | Not started | - |
-| 5. 翻译扩充与质量保障 | v3.1 | 0/? | Not started | - |
+| 4. 上下文感知架构 | v3.1 | 3/3 | Complete | 2026-04-07 |
+| 5. 翻译扩充与质量保障 | v3.1 | 0/3 | Not started | - |
 | 6. CI 覆盖率回归检测 | v3.1 | 0/? | Not started | - |
 
 ---
