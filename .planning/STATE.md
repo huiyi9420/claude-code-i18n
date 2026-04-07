@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v3.0
+milestone_name: milestone
+status: executing
+stopped_at: Phase 4 Self-Evolution Complete
+last_updated: "2026-04-07T12:00:00.000Z"
+last_activity: 2026-04-07
+progress:
+  total_phases: 4
+  completed_phases: 4
+  total_plans: 7
+  completed_plans: 7
+  percent: 100
+---
+
 # Project State
 
 ## Project Reference
@@ -5,59 +21,57 @@
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** 用户运行一条命令，Claude Code CLI 的全部用户可见界面变成准确、自然的中文，版本更新后自动适配。
-**Current focus:** Phase 1: Foundation & Safety
+**Current focus:** Phase 4 — Self-Evolution (COMPLETE)
 
 ## Current Position
 
-Phase: 1 of 3 (Foundation & Safety)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-04-05 — Roadmap created
+Phase: 4 (Self-Evolution) — COMPLETE
+Status: All 192 tests passing, 87% coverage
+Last activity: 2026-04-07
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██████████████] 100%
 
 ## Performance Metrics
 
-**Velocity:**
-- Total plans completed: 0
-- Average duration: -
-- Total execution time: 0 hours
+**Test suite:** 192 tests, 87% coverage
 
-**By Phase:**
+**By Module:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| - | - | - | - |
-
-**Recent Trend:**
-- Last 5 plans: -
-- Trend: -
-
-*Updated after each plan completion*
+| Module | Tests | Coverage |
+|--------|-------|----------|
+| core/hooks.py | 7 | 100% |
+| core/auto_translate.py | 9 | 63% |
+| io/translation_map.py | 19 | 100% |
+| io/extract_snapshot.py | 9 | 94% |
+| commands/auto_update.py | 8 | 88% |
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
-
 - [Phase 0]: 完全重写（非修补）-- 备份污染是架构级 bug
 - [Phase 0]: 纯 Python 标准库，零外部依赖
 - [Phase 0]: 增强型 regex（非 AST）-- 13MB minified 文件太大不适合 AST
 - [Phase 0]: 在新 git branch 上开发，保留现有代码
+- [Phase 01]: 5-level cascading path detection
+- [Phase 01]: BackupManager uses SHA-256 + CJK dual verification; chmod 444
+- [Phase 02]: Three-tier replacement: long(global) / medium(quote-boundary) / short(word-boundary+skip)
+- [Phase 02]: verify_syntax returns dict for consistent error handling
+- [Phase 02]: cmd_status enhanced with localization detection and map info
+- [Phase 04]: Hook sed 替换集成到 Python 引擎（hooks.py），apply 命令自动执行
+- [Phase 04]: auto-update 命令一键编排全流程（提取→翻译→合并→应用→验证）
+- [Phase 04]: 自动翻译采用纯规则引擎（词典→精确匹配→UI模板→动词模式→前缀后缀）
 
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
-- v3.0 备份文件已污染（12,224 中文字符），Phase 1 必须从全新 cli.js 创建纯净备份
-- 短字符串（<10字符）误替换风险高，Phase 2 默认跳过短字符串翻译
+None.
 
 ## Session Continuity
 
-Last session: 2026-04-05
-Stopped at: Roadmap created, ready for Phase 1 planning
+Last session: 2026-04-07
+Stopped at: Phase 4 complete, ready for git commit
 Resume file: None

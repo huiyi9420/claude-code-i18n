@@ -1,0 +1,7 @@
+{
+  "skip": [
+    "Error",
+    "Warning",
+    "Success"
+  ]
+}

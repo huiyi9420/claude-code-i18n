@@ -12,9 +12,9 @@
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题
-- [ ] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力
-- [ ] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本
+- [x] **Phase 1: Foundation & Safety** - 备份管理器、路径检测、原子写入、CLI 框架 -- 解决备份污染这一最严重问题 (completed 2026-04-05)
+- [x] **Phase 2: Core Engine** - 三级替换引擎、提取器、验证器、版本检测、状态命令 -- 实现核心汉化/恢复能力 (completed 2026-04-05)
+- [x] **Phase 3: Integration & Quality** - 安装脚本、单元测试、集成测试 -- 交付可部署的完整重写版本 (completed 2026-04-05)
 
 ## Phase Details
 
@@ -28,12 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. 用户运行 `python engine.py restore` 后，cli.js 恢复为 100% 纯英文（零中文字符残留），且恢复前自动校验备份哈希
   4. 当 CLI 未安装或路径无效时，用户看到清晰的错误信息和安装指引（非 Python traceback）
   5. 所有文件写入操作均为原子性（断电或中断不会留下损坏文件）
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Path Resolver -- 自动检测 CLI 路径 + 环境变量/配置文件覆盖 + 校验
-- [ ] 01-02: Backup Manager -- 纯净备份创建 + SHA-256 校验 + CJK 污染检测 + 只读保护
-- [ ] 01-03: CLI Framework + Restore -- argparse 子命令框架 + restore 命令 + 原子写入工具
+- [x] 01-01-PLAN.md -- Path Resolver: 5 级级联路径检测 (env/config/volta/npm/common) + 路径验证 + 常量定义 + 单元测试
+- [x] 01-02-PLAN.md -- Backup Manager: 不可变备份管理器 + SHA-256 校验 + CJK 纯净性检查 + 原子写入工具 + 单元测试
+- [x] 01-03-PLAN.md -- CLI Framework + Restore: argparse 子命令路由 + restore/status/version 命令 + engine.py 入口 + 单元测试
 
 ### Phase 2: Core Engine
 **Goal**: 用户运行一条命令即可安全地将 Claude Code CLI 界面汉化为中文，替换后语法正确、失败自动回滚，且能从纯净源提取新的可翻译字符串
@@ -45,13 +45,13 @@ Plans:
   3. 用户运行 `python engine.py extract` 获得新版本 cli.js 中的可翻译字符串候选列表（JSON 格式，含评分和出现次数），列表中不包含任何中文字符或代码标识符
   4. 当 Claude Code 更新后（版本号变化），工具自动检测版本变更、删除旧备份并从新 cli.js 重新创建纯净备份，向用户报告版本变化（旧版本号 -> 新版本号）
   5. 用户运行 `python engine.py status` 能看到当前 CLI 版本、汉化状态、翻译条目数、备份完整性的 JSON 输出
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: Translation Map + Scanner -- JSON 映射表加载/校验 + 字符串扫描器（信号评分 + 噪声过滤）
-- [ ] 02-02: Replacement Engine -- 三级替换策略（长/中/短）+ 逆序替换 + Hook 精确替换
-- [ ] 02-03: Verification + Version -- node --check 验证 + 回滚 + 版本检测 + 版本变更处理
-- [ ] 02-04: Extract + Status Commands -- extract 命令 + status/version 命令 + 跨平台支持
+- [x] 02-01-PLAN.md -- Translation Map + Scanner: JSON 映射表加载/校验 + 噪声过滤器 + UI 指标评分 + 字符串扫描器
+- [x] 02-02-PLAN.md -- Replacement Engine: 三级替换策略（长/中/短）+ 逆序替换 + 统计追踪
+- [x] 02-03-PLAN.md -- Verification + Version: node --check 验证 + 回滚 + 版本检测 + 版本变更处理
+- [x] 02-04-PLAN.md -- Commands + CLI Integration: apply/extract/status 命令实现 + CLI 路由更新
 
 ### Phase 3: Integration & Quality
 **Goal**: 用户可以通过安装脚本一键部署汉化工具，且工具经过完整测试覆盖，达到可发布质量
@@ -65,9 +65,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 03-01: Installation Script -- install.sh + 技能命令同步 + 环境检查
-- [ ] 03-02: Unit Tests -- 路径/备份/扫描/替换/提取各模块单元测试
-- [ ] 03-03: Integration Tests + Coverage -- 端到端往返测试 + 覆盖率验证
+- [x] 03-01: Installation Script -- install.sh + 技能命令同步 + 环境检查
+- [x] 03-02: Unit Tests -- 路径/备份/扫描/替换/提取各模块单元测试
+- [x] 03-03: Integration Tests + Coverage -- 端到端往返测试 + 覆盖率验证
 
 ## Progress
 
@@ -76,6 +76,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Safety | 0/3 | Not started | - |
-| 2. Core Engine | 0/4 | Not started | - |
-| 3. Integration & Quality | 0/3 | Not started | - |
+| 1. Foundation & Safety | 0/3 | Complete    | 2026-04-05 |
+| 2. Core Engine | 4/4 | Complete    | 2026-04-05 |
+| 3. Integration & Quality | 3/3 | Complete    | 2026-04-05 |

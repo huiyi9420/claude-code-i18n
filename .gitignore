@@ -4,3 +4,15 @@ __pycache__/
 .DS_Store
 *.bak
 cli.bak.en.js
+.venv/
+.spec-workflow/
+
+# Runtime artifacts
+extract-snapshot.json
+zh-CN.json.bak
+*.coverage
+htmlcov/
+coverage.xml
+
+# Planning workflow
+.planning/
