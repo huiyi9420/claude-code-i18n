@@ -1,4 +1,7 @@
-"""Tests for translation map loader and skip words (MAP-01~04)."""
+"""Tests for translation map loader and skip words (MAP-01~04).
+
+Extended with v6 context-aware format tests (CTX-01).
+"""
 
 import json
 from pathlib import Path
@@ -108,3 +111,228 @@ class TestLoadSkipWords:
 
         with pytest.raises(FileNotFoundError, match="Skip words"):
             load_skip_words(Path("/nonexistent/skip.json"))
+
+
+# ============================================================
+# v6 context-aware format tests (CTX-01)
+# ============================================================
+
+
+class TestLoadV6Format:
+    """Tests for v6 format with context-aware translations."""
+
+    def test_load_v6_format_with_contexts(self, tmp_path):
+        """CTX-01: Load entries with contexts field."""
+        from scripts.i18n.io.translation_map import load_translation_map
+
+        data = {
+            "_meta": {"version": "6.0.0"},
+            "translations": {
+                "Error": {
+                    "zh": "错误",
+                    "contexts": {
+                        "tools": "工具错误",
+                        "auth": "认证错误",
+                    },
+                },
+            },
+        }
+        p = tmp_path / "v6.json"
+        p.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+        result = load_translation_map(p)
+        # translations 仍然展平为 {en: zh}
+        assert result["translations"]["Error"] == "错误"
+        # raw_translations 保留完整结构
+        assert "raw_translations" in result
+        raw_error = result["raw_translations"]["Error"]
+        assert raw_error["zh"] == "错误"
+        assert raw_error["contexts"]["tools"] == "工具错误"
+        assert raw_error["contexts"]["auth"] == "认证错误"
+
+    def test_load_v4_string_backward_compat(self, tmp_path):
+        """CTX-01: Pure string values treated as {zh: value}."""
+        from scripts.i18n.io.translation_map import load_translation_map
+
+        data = {
+            "_meta": {"version": "4.0.0"},
+            "translations": {
+                "Loading": "加载中",
+                "Plan Mode": "规划模式",
+            },
+        }
+        p = tmp_path / "v4.json"
+        p.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+        result = load_translation_map(p)
+        assert result["translations"]["Loading"] == "加载中"
+        assert result["translations"]["Plan Mode"] == "规划模式"
+        # raw_translations 中字符串值被规范化为 {"zh": value}
+        assert result["raw_translations"]["Loading"] == {"zh": "加载中"}
+        assert result["raw_translations"]["Plan Mode"] == {"zh": "规划模式"}
+
+    def test_load_v5_dict_backward_compat(self, tmp_path):
+        """CTX-01: Dict with only zh key (no contexts) works normally."""
+        from scripts.i18n.io.translation_map import load_translation_map
+
+        data = {
+            "_meta": {"version": "5.0.0"},
+            "translations": {
+                "Auto mode": {"zh": "自动模式"},
+            },
+        }
+        p = tmp_path / "v5.json"
+        p.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+        result = load_translation_map(p)
+        assert result["translations"]["Auto mode"] == "自动模式"
+        assert result["raw_translations"]["Auto mode"] == {"zh": "自动模式"}
+
+    def test_mixed_format(self, tmp_path):
+        """CTX-01: Mix of v4 (string), v5 (zh-only), v6 (with contexts)."""
+        from scripts.i18n.io.translation_map import load_translation_map
+
+        data = {
+            "_meta": {"version": "6.0.0"},
+            "translations": {
+                "Loading": "加载中",
+                "Auto mode": {"zh": "自动模式"},
+                "Error": {
+                    "zh": "错误",
+                    "contexts": {
+                        "tools": "工具错误",
+                        "auth": "认证错误",
+                    },
+                },
+            },
+        }
+        p = tmp_path / "mixed_v6.json"
+        p.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+
+        result = load_translation_map(p)
+        assert result["translations"]["Loading"] == "加载中"
+        assert result["translations"]["Auto mode"] == "自动模式"
+        assert result["translations"]["Error"] == "错误"
+        # raw_translations preserves full structure
+        assert result["raw_translations"]["Loading"] == {"zh": "加载中"}
+        assert result["raw_translations"]["Auto mode"] == {"zh": "自动模式"}
+        assert result["raw_translations"]["Error"]["contexts"]["tools"] == "工具错误"
+
+
+class TestResolveTranslation:
+    """Tests for resolve_translation function."""
+
+    def test_resolve_translation_exact_context(self):
+        """CTX-01: Returns context-specific translation when tag matches."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        entry = {
+            "zh": "错误",
+            "contexts": {
+                "tools": "工具错误",
+                "auth": "认证错误",
+            },
+        }
+        assert resolve_translation(entry, ["tools"]) == "工具错误"
+        assert resolve_translation(entry, ["auth"]) == "认证错误"
+
+    def test_resolve_translation_fallback(self):
+        """CTX-01: Falls back to zh default when no context matches."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        entry = {
+            "zh": "错误",
+            "contexts": {
+                "tools": "工具错误",
+            },
+        }
+        assert resolve_translation(entry, ["unknown"]) == "错误"
+
+    def test_resolve_translation_no_contexts(self):
+        """CTX-01: Returns zh value directly when no contexts field."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        entry = {"zh": "自动模式"}
+        assert resolve_translation(entry, ["tools"]) == "自动模式"
+
+    def test_resolve_translation_string_entry(self):
+        """CTX-01: String entry returned as-is."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        assert resolve_translation("加载中", ["tools"]) == "加载中"
+
+    def test_resolve_translation_empty_tags(self):
+        """CTX-01: Empty context tags returns default zh."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        entry = {
+            "zh": "错误",
+            "contexts": {
+                "tools": "工具错误",
+            },
+        }
+        assert resolve_translation(entry, []) == "错误"
+
+    def test_resolve_translation_multiple_tags_priority(self):
+        """CTX-01: First matching context tag wins when multiple provided."""
+        from scripts.i18n.io.translation_map import resolve_translation
+
+        entry = {
+            "zh": "错误",
+            "contexts": {
+                "tools": "工具错误",
+                "auth": "认证错误",
+            },
+        }
+        # 第一个匹配的 tag 优先
+        assert resolve_translation(entry, ["tools", "auth"]) == "工具错误"
+        assert resolve_translation(entry, ["auth", "tools"]) == "认证错误"
+
+
+class TestSaveV6Format:
+    """Tests for save_translation_map with v6 format."""
+
+    def test_save_v6_format(self, tmp_path):
+        """CTX-01: Saving with raw_translations preserves contexts."""
+        from scripts.i18n.io.translation_map import (
+            load_translation_map,
+            save_translation_map,
+        )
+
+        raw_translations = {
+            "Error": {
+                "zh": "错误",
+                "contexts": {
+                    "tools": "工具错误",
+                    "auth": "认证错误",
+                },
+            },
+            "Loading": {"zh": "加载中"},
+        }
+        p = tmp_path / "save_v6.json"
+        save_translation_map(p, {"version": "6.0.0"}, raw_translations)
+
+        # 重新加载验证格式一致
+        result = load_translation_map(p)
+        assert result["translations"]["Error"] == "错误"
+        assert result["translations"]["Loading"] == "加载中"
+        assert result["raw_translations"]["Error"]["contexts"]["tools"] == "工具错误"
+        assert result["raw_translations"]["Error"]["contexts"]["auth"] == "认证错误"
+
+    def test_save_v6_preserves_string_values(self, tmp_path):
+        """CTX-01: Saving plain string values round-trips correctly."""
+        from scripts.i18n.io.translation_map import (
+            load_translation_map,
+            save_translation_map,
+        )
+
+        translations = {
+            "Loading": "加载中",
+            "Plan Mode": {"zh": "规划模式"},
+        }
+        p = tmp_path / "save_strings.json"
+        save_translation_map(p, {"version": "6.0.0"}, translations)
+
+        result = load_translation_map(p)
+        assert result["translations"]["Loading"] == "加载中"
+        assert result["translations"]["Plan Mode"] == "规划模式"
