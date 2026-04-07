@@ -246,3 +246,189 @@ class TestEdgeCases:
         new_content, stats = apply_translations("", translations, set())
         assert new_content == ""
         assert stats["short"] == 0
+
+
+# ── Context-aware replacement (04-02) ─────────────────────────────
+
+
+class TestContextAwareReplacement:
+    """Tests for context-aware translation selection in apply_translations."""
+
+    def test_apply_with_context_exact_match(self):
+        """Entry with contexts: in matching region, use context translation."""
+        # "tools" region is at position 50-200 (simulated)
+        content = (
+            'var x="default text";'
+            'tool_name="Permission denied";'
+            'toolResult="Permission denied";'
+        )
+        translations = {"Permission denied": "权限被拒绝"}
+        raw_translations = {
+            "Permission denied": {
+                "zh": "权限被拒绝",
+                "contexts": {"tools": "工具权限不足"},
+            }
+        }
+        context_index = [
+            {"tag": "tools", "start": 19, "end": 72},
+        ]
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=context_index,
+        )
+        # In "tools" region: "Permission denied" -> "工具权限不足"
+        assert "工具权限不足" in new_content
+        assert stats["contextual"] >= 1
+
+    def test_apply_with_context_fallback(self):
+        """Entry with contexts: in non-matching region, use global default."""
+        content = 'var x="Permission denied";'
+        translations = {"Permission denied": "权限被拒绝"}
+        raw_translations = {
+            "Permission denied": {
+                "zh": "权限被拒绝",
+                "contexts": {"tools": "工具权限不足"},
+            }
+        }
+        # No context index region covers position 7-26
+        context_index = [
+            {"tag": "auth", "start": 100, "end": 200},
+        ]
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=context_index,
+        )
+        # No matching context -> fallback to global "权限被拒绝"
+        assert "权限被拒绝" in new_content
+        # "工具权限不足" should NOT appear
+        assert "工具权限不足" not in new_content
+
+    def test_apply_without_context_index(self):
+        """Without context_index, behavior is identical to v3.0."""
+        content = 'var x="Permission denied for user account access";'
+        translations = {"Permission denied for user account access": "权限被拒绝"}
+        raw_translations = {
+            "Permission denied for user account access": {
+                "zh": "权限被拒绝",
+                "contexts": {"auth": "认证权限不足"},
+            }
+        }
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=None,
+        )
+        # No context_index -> always use global default
+        assert "权限被拒绝" in new_content
+        assert "认证权限不足" not in new_content
+
+    def test_apply_mixed_context_and_plain(self):
+        """Mix of entries with and without context annotations."""
+        content = (
+            'var a="Permission denied";'
+            'var b="An unexpected error occurred in system";'
+            'tool_name="Permission denied";'
+        )
+        translations = {
+            "Permission denied": "权限被拒绝",
+            "An unexpected error occurred in system": "系统发生意外错误",
+        }
+        raw_translations = {
+            "Permission denied": {
+                "zh": "权限被拒绝",
+                "contexts": {"tools": "工具权限不足"},
+            },
+            # "An unexpected error..." is a plain string (v4 format)
+            "An unexpected error occurred in system": "系统发生意外错误",
+        }
+        context_index = [
+            {"tag": "tools", "start": 59, "end": 96},
+        ]
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=context_index,
+        )
+        # First "Permission denied" at pos 7 (not in tools region) -> global "权限被拒绝"
+        # "An unexpected error..." is long tier -> global "系统发生意外错误"
+        # Second "Permission denied" at pos ~74 (in tools region) -> "工具权限不足"
+        assert "权限被拒绝" in new_content
+        assert "系统发生意外错误" in new_content
+        assert "工具权限不足" in new_content
+
+    def test_contextual_stats(self):
+        """Stats include 'contextual' counter."""
+        content = 'tool_name="Permission denied";'
+        translations = {"Permission denied": "权限被拒绝"}
+        raw_translations = {
+            "Permission denied": {
+                "zh": "权限被拒绝",
+                "contexts": {"tools": "工具权限不足"},
+            }
+        }
+        context_index = [
+            {"tag": "tools", "start": 0, "end": 50},
+        ]
+        _, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=context_index,
+        )
+        assert "contextual" in stats
+        assert stats["contextual"] >= 1
+
+    def test_apply_no_raw_translations(self):
+        """Without raw_translations, use translations dict directly (v3 compat)."""
+        content = 'var x="Permission denied";'
+        translations = {"Permission denied": "权限被拒绝"}
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=None,
+            context_index=None,
+        )
+        assert "权限被拒绝" in new_content
+        assert stats["contextual"] == 0
+
+    def test_long_string_context_aware(self):
+        """Long strings: each occurrence independently selects translation by context."""
+        # Two occurrences of same long string in different regions
+        content = (
+            'auth_token("An unexpected error occurred in processing");'
+            'tool_name="An unexpected error occurred in processing";'
+        )
+        translations = {"An unexpected error occurred in processing": "处理中发生意外错误"}
+        raw_translations = {
+            "An unexpected error occurred in processing": {
+                "zh": "处理中发生意外错误",
+                "contexts": {"auth": "认证处理错误"},
+            }
+        }
+        context_index = [
+            {"tag": "auth", "start": 0, "end": 53},
+            {"tag": "tools", "start": 53, "end": 110},
+        ]
+        new_content, stats = apply_translations(
+            content, translations, set(),
+            raw_translations=raw_translations,
+            context_index=context_index,
+        )
+        # First occurrence in auth region -> "认证处理错误"
+        assert "认证处理错误" in new_content
+        # Second occurrence in tools region (no tools context) -> global fallback
+        assert "处理中发生意外错误" in new_content
+        assert stats["contextual"] >= 1
+
+    def test_existing_tests_backward_compatible(self):
+        """Verify that existing tests still pass with new params defaulting to None."""
+        content = _load_fixture("sample_replacer_content.js")
+        translations = {
+            "An unexpected error occurred while processing your request.": "处理请求时发生意外错误。",
+            "Permission denied": "权限被拒绝",
+            "OK": "好的",
+        }
+        new_content, stats = apply_translations(content, translations, set())
+        assert stats["long"] > 0
+        assert stats["medium"] > 0
+        assert stats["short"] > 0
