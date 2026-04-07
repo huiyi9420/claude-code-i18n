@@ -34,18 +34,19 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COV-01 | — | — |
-| COV-02 | — | — |
-| COV-03 | — | — |
-| COV-04 | — | — |
-| CTX-01 | — | — |
-| CTX-02 | — | — |
-| CTX-03 | — | — |
-| CTX-04 | — | — |
+| COV-01 | Phase 5 | Pending |
+| COV-02 | Phase 5 | Pending |
+| COV-03 | Phase 5 | Pending |
+| COV-04 | Phase 6 | Pending |
+| CTX-01 | Phase 4 | Pending |
+| CTX-02 | Phase 4 | Pending |
+| CTX-03 | Phase 4 | Pending |
+| CTX-04 | Phase 5 | Pending |
 
 **Coverage:**
 - v3.1 requirements: 8 (2 categories)
-- Mapped to phases: pending roadmap
+- Mapped to phases: 8/8 (100%)
 
 ---
 *Requirements defined: 2026-04-07*
+*Traceability updated: 2026-04-07 — Roadmap created*
