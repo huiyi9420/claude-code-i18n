@@ -6,6 +6,7 @@ import pytest
 
 from scripts.i18n.filters.noise_filter import NOISE_RE
 from scripts.i18n.core.scanner import scan_candidates
+from scripts.i18n.core.context_detector import build_context_index
 
 
 class TestScanBasic:
@@ -188,3 +189,64 @@ class TestScanEdgeCases:
         results = scan_candidates(content, set(), set(), NOISE_RE)
         ens = [r["en"] for r in results]
         assert ens.count("Plan Mode active") <= 1
+
+
+class TestScanContextDetection:
+    """Tests for context-aware scanning with context_index parameter."""
+
+    def test_scan_with_context_index(self):
+        """Candidates include contexts field when context_index is provided."""
+        content = 'tool_name "Plan Mode is active for this session" toolResult'
+        index = build_context_index(content)
+        results = scan_candidates(content, set(), set(), NOISE_RE, context_index=index)
+        assert len(results) > 0
+        for r in results:
+            assert "contexts" in r
+            assert isinstance(r["contexts"], list)
+
+    def test_scan_multiple_contexts(self):
+        """Same string in multiple regions gets multiple context tags."""
+        content = (
+            'tool_name "Plan Mode is active for this session" toolResult'
+            + " " * 600
+            + 'auth "Plan Mode is active for this session" token'
+        )
+        index = build_context_index(content)
+        results = scan_candidates(content, set(), set(), NOISE_RE, context_index=index)
+        assert len(results) >= 1
+        plan_result = [r for r in results if "Plan Mode" in r["en"]]
+        if plan_result:
+            ctx = plan_result[0]["contexts"]
+            assert len(ctx) >= 2
+            assert "tools" in ctx
+            assert "auth" in ctx
+
+    def test_scan_default_context(self):
+        """String not in any known region gets ["default"] context."""
+        # Use content with no context patterns, but with a signal string
+        content = '"Plan Mode is active for this session"'
+        index = build_context_index(content)
+        results = scan_candidates(content, set(), set(), NOISE_RE, context_index=index)
+        assert len(results) > 0
+        for r in results:
+            assert r["contexts"] == ["default"]
+
+    def test_scan_without_context_index(self):
+        """Without context_index, contexts field is empty list (backward compat)."""
+        content = '"Plan Mode is active for this session"'
+        results = scan_candidates(content, set(), set(), NOISE_RE)
+        assert len(results) > 0
+        for r in results:
+            assert r["contexts"] == []
+
+    def test_scan_context_dedup(self):
+        """Same context tag from multiple positions is deduplicated."""
+        # Create content where the same pattern triggers the same tag twice
+        # within window range, producing overlapping regions
+        content = 'tool_name toolResult "Plan Mode is active for this session" tool_use'
+        index = build_context_index(content)
+        results = scan_candidates(content, set(), set(), NOISE_RE, context_index=index)
+        assert len(results) > 0
+        for r in results:
+            # "tools" should appear at most once in contexts
+            assert r["contexts"].count("tools") <= 1
