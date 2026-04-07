@@ -79,6 +79,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser('version', help='Show CLI version')
     sub.add_parser('apply', help='Apply Chinese localization')
     sub.add_parser('extract', help='Extract translatable strings')
+    sub.add_parser('auto-update', help='One-click: detect, translate, apply')
 
     return parser
 
@@ -112,6 +113,7 @@ def main() -> None:
     from scripts.i18n.commands.apply import cmd_apply
     from scripts.i18n.commands.extract import cmd_extract
     from scripts.i18n.commands.status import cmd_status
+    from scripts.i18n.commands.auto_update import cmd_auto_update
 
     commands = {
         'status': cmd_status,
@@ -119,6 +121,7 @@ def main() -> None:
         'version': cmd_version,
         'apply': cmd_apply,
         'extract': cmd_extract,
+        'auto-update': cmd_auto_update,
     }
 
     cmd_func = commands.get(args.command)
