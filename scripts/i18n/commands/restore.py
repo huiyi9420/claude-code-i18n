@@ -8,55 +8,61 @@ Flow:
 5. Output JSON result
 """
 
+import sys
+
 from scripts.i18n.cli import get_cli_dir, output_json, output_error
 from scripts.i18n.io.backup import BackupManager
 
 
-def cmd_restore() -> None:
-    """Restore cli.js from pristine backup.
+def _progress(*args, **kwargs) -> None:
+    """Print progress message to stderr (keeps stdout clean for JSON output)."""
+    print(*args, **kwargs, file=sys.stderr, flush=True)
 
-    Handles:
-    - CLI not found (delegated to get_cli_dir)
-    - No backup exists
-    - Hash mismatch (auto-recreate from cli.js)
-    - Backup poisoned (CJK in backup)
-    - Post-restore CJK purity verification (BAK-07)
-    """
+
+def cmd_restore() -> None:
+    """Restore cli.js from pristine backup."""
     cli_dir = get_cli_dir()
     bm = BackupManager(cli_dir)
+
+    _progress("▶ 恢复原始英文 cli.js...", end="")
     result = bm.restore()
 
     if not result['ok']:
         # Hash mismatch: auto-recreate backup from current cli.js
         if result.get('error') == 'hash_mismatch':
+            _progress(" 哈希不匹配，重建备份...")
             create_result = bm.ensure_backup()
             if create_result['ok']:
+                _progress("▶ 重新恢复...", end="")
                 result = bm.restore()
                 if result['ok']:
-                    # Verify post-restore purity (BAK-07)
                     if not bm._is_pristine_file(bm.cli_js):
+                        _progress(" 失败!")
                         output_error(
                             "restore verification failed",
                             hint="cli.js still contains CJK characters after restore",
                         )
+                    _progress(" 完成")
                     output_json(result)
                     return
-            # Recreate failed or re-restore failed
+            _progress(" 失败!")
             output_error(
                 result.get('error', 'restore_failed'),
                 hint=result.get('hint', ''),
             )
             return
-        # Other errors (no_backup, backup_poisoned)
+        _progress(f" 失败! ({result.get('error', 'unknown')})")
         output_error(
             result.get('error', 'unknown'),
             hint=result.get('hint', ''),
         )
     else:
-        # Verify post-restore purity (BAK-07)
         if not bm._is_pristine_file(bm.cli_js):
+            _progress(" 失败! (验证未通过)")
             output_error(
                 "restore verification failed",
                 hint="cli.js still contains CJK characters after restore",
             )
+        else:
+            _progress(" 完成")
         output_json(result)
