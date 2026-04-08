@@ -92,9 +92,16 @@ def handle_version_change(cli_dir: Path, map_meta: dict) -> dict:
     if bm.hash_file.exists():
         bm.hash_file.unlink()
 
-    # Re-create from new cli.js
+    # Re-create from new cli.js (will fail if cli.js is already localized)
     result = bm.ensure_backup()
     check["backup_recreated"] = result["ok"]
     if not result["ok"]:
         check["error"] = result.get("error", "backup recreation failed")
+        # If cli.js is localized, we can't create a clean backup.
+        # User must reinstall Claude Code first.
+        if result.get("error") == "source_not_pristine":
+            check["error"] = (
+                "CLI has been updated but current cli.js is already localized. "
+                "Reinstall Claude Code to get pristine files."
+            )
     return check

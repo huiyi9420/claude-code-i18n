@@ -88,6 +88,9 @@ def cmd_apply() -> None:
     # Write via atomic operation
     atomic_write_text(cli_js, modified)
 
+    # Ensure cli.js is writable and executable (atomic_write may preserve 444 from backup)
+    cli_js.chmod(0o644)
+
     # Verify syntax (APPLY-07)
     verify_result = verify_syntax(cli_js)
 

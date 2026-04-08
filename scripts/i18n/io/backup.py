@@ -148,6 +148,9 @@ class BackupManager:
         # Restore from backup
         shutil.copy2(self.backup, self.cli_js)
 
+        # Ensure cli.js is writable (backup is 444, copy2 preserves permissions)
+        self.cli_js.chmod(0o644)
+
         return {"ok": True, "action": "restored"}
 
     def _sha256(self) -> str:
