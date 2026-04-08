@@ -70,25 +70,23 @@ Plans:
 3. 覆盖率检查结果以 JSON 格式输出，可供 CI 解析和展示
 4. CI 中翻译覆盖率检查在 60 秒内完成（不影响整体 CI 效率）
 
-**Plans**: 3 plans
+**Plans**: 1 plan
 
 Plans:
-- [ ] 06-01-PLAN.md — TBD
-- [ ] 06-02-PLAN.md — TBD
-- [ ] 06-03-PLAN.md — TBD
+- [ ] 06-01-PLAN.md — CI 覆盖率回归检测脚本 + workflow 集成
 
 ## Coverage Map
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COV-01 | Phase 5 | Pending |
-| COV-02 | Phase 5 | Pending |
-| COV-03 | Phase 5 | Pending |
+| COV-01 | Phase 5 | Complete |
+| COV-02 | Phase 5 | Complete |
+| COV-03 | Phase 5 | Complete |
 | COV-04 | Phase 6 | Pending |
 | CTX-01 | Phase 4 | Complete |
 | CTX-02 | Phase 4 | Complete |
 | CTX-03 | Phase 4 | Complete |
-| CTX-04 | Phase 5 | Pending |
+| CTX-04 | Phase 5 | Complete |
 
 **Coverage:** 8/8 requirements mapped (100%)
 
@@ -101,9 +99,9 @@ Plans:
 | 3. Integration & Quality | v3.0 | 3/3 | Complete | 2026-04-07 |
 | 4. 上下文感知架构 | v3.1 | 3/3 | Complete | 2026-04-07 |
 | 5. 翻译扩充与质量保障 | v3.1 | 3/3 | Complete   | 2026-04-07 |
-| 6. CI 覆盖率回归检测 | v3.1 | 0/? | Not started | - |
+| 6. CI 覆盖率回归检测 | v3.1 | 0/1 | Not started | - |
 
 ---
 
 _This roadmap is consumed by `/gsd:plan-phase` for phase decomposition._
-_Last updated: 2026-04-07_
+_Last updated: 2026-04-08_
