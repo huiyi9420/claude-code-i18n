@@ -149,7 +149,7 @@ class BackupManager:
         shutil.copy2(self.backup, self.cli_js)
 
         # Ensure cli.js is writable (backup is 444, copy2 preserves permissions)
-        self.cli_js.chmod(0o644)
+        self.cli_js.chmod(0o755)
 
         return {"ok": True, "action": "restored"}
 
