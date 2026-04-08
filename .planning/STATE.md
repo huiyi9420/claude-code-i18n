@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: milestone
-status: completed
-last_updated: "2026-04-07T12:36:56.642Z"
-last_activity: 2026-04-07
+status: verifying
+last_updated: "2026-04-08T02:14:23.538Z"
+last_activity: 2026-04-08
 progress:
   total_phases: 3
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
   percent: 100
 ---
 
@@ -20,15 +20,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-07)
 
 **Core value:** 用户运行一条命令，Claude Code CLI 的全部用户可见界面变成准确、自然的中文，版本更新后自动适配。
-**Current focus:** Phase 05 — 翻译扩充与质量保障
+**Current focus:** Phase 06 完成 — CI 覆盖率回归检测已实现
 
 ## Current Position
 
 Milestone: v3.1 — 翻译增强
-Phase: 6
-Plan: Not started
-Status: Complete — all 3 plans executed
-Last activity: 2026-04-07
+Phase: 06 (CI 覆盖率回归检测) — COMPLETE
+Plan: 1 of 1 (done)
+Status: All phases complete — ready for milestone verification
+Last activity: 2026-04-08
 
 Progress: [██████████████] 100%
 
@@ -73,6 +73,9 @@ Progress: [██████████████] 100%
 - [Phase Phase 05]: 未使用 prefix_suffix_match 规则，全部为人工策展翻译
 - [Phase 05]: 946 new curated translations across 6 categories: operations, security, API, git, MCP/tools, UI
 - [Phase 05]: Long strings (>20 chars) grew 84% from 684 to 1,260 entries
+- [Phase 06-ci]: CI 覆盖率检查使用独立脚本，不依赖 cli.js，仅统计翻译条目数量与基线对比
+- [Phase 06-ci]: 基线文件不存在时 ok=true（首次运行场景）
+- [Phase 06-ci]: coverage-regression job 与 test job 并行运行，使用单一 Python 3.12
 
 ### Blockers/Concerns
 
@@ -86,7 +89,7 @@ None.
 
 ## Session Continuity
 
-**Next action:** Phase 05 已完成，可开始 Phase 06（CI 回归检测）规划
+**Next action:** 所有 Phase 已完成，可进行 milestone 验证
 
 ---
-*State updated: 2026-04-07 — Phase 05 complete*
+*State updated: 2026-04-08 — Phase 06 complete*

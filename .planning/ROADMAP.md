@@ -73,7 +73,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 06-01-PLAN.md — CI 覆盖率回归检测脚本 + workflow 集成
+- [x] 06-01-PLAN.md — CI 覆盖率回归检测脚本 + workflow 集成
 
 ## Coverage Map
 
