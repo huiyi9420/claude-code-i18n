@@ -1,6 +1,9 @@
 # Claude Code auto-i18n
 
-> 🇨🇳 一键将 Claude Code CLI 终端界面汉化为中文。CLI 更新后执行 `/auto-i18n` 即可自动重新汉化。
+> 🇨🇳 一键将 Claude Code CLI 终端界面汉化为中文。
+>
+> **💡 自带自我进化能力：永远不用担心 Claude 升级后汉化失效！**
+> 每次 Claude 升级后，只需执行 `/auto-i18n auto-update`，技能会自动提取新字符串、自动翻译、自动应用，完成自我进化适配新版本。
 
 [![Tests](https://github.com/huiyi9420/claude-code-i18n/actions/workflows/tests.yml/badge.svg)](https://github.com/huiyi9420/claude-code-i18n/actions/workflows/tests.yml)
 [![Coverage](https://img.shields.io/badge/coverage-87%25-green.svg)](https://github.com/huiyi9420/claude-code-i18n/actions)
@@ -18,9 +21,9 @@
 ## 功能特性
 
 - **✅ 一键汉化** — `/auto-i18n` 完成提取、翻译、应用、验证全流程
-- **✅ 自我进化** — CLI 更新后 `/auto-i18n auto-update` 自动适配新版本
-- **✅ 规则引擎** — 内置 400+ 翻译条目 + 自动翻译词典 + 动词模式匹配
-- **✅ 安全保障** — 三级替换策略 + Hook 专门处理 + 语法验证 + 失败自动回滚
+- **✅ 自我进化** — **永远适配新版本**：CLI 更新后 `/auto-i18n auto-update` 自动提取新字符串、自动翻译、自动适配，无需手动修改代码
+- **✅ 规则引擎** — 内置 400+ 翻译条目 + 自动翻译词典 + 动词模式匹配，大部分新内容可以直接自动翻译
+- **✅ 安全保障** — 三级替换策略 + Hook 专门处理 + 语法验证 + 失败自动回滚，绝不破坏原程序
 - **✅ 完全可逆** — `/auto-i18n restore` 一键恢复英文原文
 - **✅ Volta 兼容** — 自动检测双路径并同步，Volta 安装也能正常使用
 - **✅ 测试完备** — 265+ 单元测试，87% 覆盖率，质量保证
@@ -159,7 +162,7 @@ claude-code-i18n/
 
 | 问题 | 解决方案 |
 |------|---------|
-| CLI 更新后汉化失效 | 执行 `/auto-i18n auto-update` 自动重新汉化 |
+| CLI 更新后汉化失效 | **自带自我进化**：执行 `/auto-i18n auto-update`，自动提取新字符串→自动翻译→自动适配，一键完成 |
 | 汉化后 CLI 界面仍是英文 | 检查 Volta 双路径，执行完后会自动同步。如果还是英文，手动同步：`cp ~/.volta/tools/image/packages/@anthropic-ai/claude-code/lib/node_modules/@anthropic-ai/claude-code/cli.js ~/.volta/tools/image/node/$(basename ~/.volta/tools/image/node/*)/lib/node_modules/@anthropic-ai/claude-code/cli.js` |
 | 语法验证失败 | 会自动回滚，通常是翻译中包含了未转义的双引号 `"`，改用中文引号 `「」` |
 | 找不到 cli.js | 设置环境变量指定路径：`export CLAUDE_I18N_CLI_DIR=$(dirname $(which claude))/../lib/node_modules/@anthropic-ai/claude-code` |
