@@ -22,10 +22,23 @@ $ARGUMENTS
 ### CLI 安装路径检测
 
 ```bash
-# Volta 安装
+# Volta 安装（引擎检测路径）
 cli_dir=$(dirname "$(find ~/.volta/tools/image/packages/@anthropic-ai/claude-code -name "cli.js" -path "*/lib/node_modules/*" 2>/dev/null | head -1)")
 # npm 全局安装
 [ -z "$cli_dir" ] && cli_dir=$(dirname "$(find /usr/local/lib/node_modules/@anthropic-ai/claude-code -name "cli.js" 2>/dev/null | head -1)")
+```
+
+**重要：Volta 双路径同步**
+
+Volta 实际执行的 CLI 位于 `~/.volta/tools/image/node/<version>/lib/node_modules/@anthropic-ai/claude-code/cli.js`，
+但引擎只检测 `packages/` 路径。每次 apply 后必须将翻译后的 cli.js 复制到实际执行路径：
+
+```bash
+# 检测 Volta 执行路径
+volta_exec_path=$(dirname "$(find ~/.volta/tools/image/node -name "cli.js" -path "*/@anthropic-ai/claude-code/*" 2>/dev/null | head -1)")
+
+# 同步翻译后的 cli.js（apply 后必须执行）
+cp "$cli_dir/cli.js" "$volta_exec_path/cli.js" && chmod 755 "$volta_exec_path/cli.js"
 ```
 
 ### 参数 -> 行为映射
@@ -98,9 +111,10 @@ python3 ~/.claude/scripts/engine.py extract
 - 保留命令名如 `/login`、`/config` 不翻译
 - 保留专有名词如 `MCP`、`API`、`Git` 不翻译
 - 技术术语保留英文或用通用中文译法
-- **短字符串（<10字符）需谨慎，只在明确是 UI 文本时才翻译**
+- **短字符串现在安全支持翻译**：引擎使用 quote-boundary regex（只匹配引号内的字符串），不会误改代码逻辑
 - **加载动词列表**（如 Marinating、Pondering、Sock-hopping 等）翻译为"XX中"格式
-- **React 拼接字符串**（如 `"Claude Code","'","ll be able to..."`) 需特别关注，翻译被拆分的部分
+- **React 拼接字符串**（如 `"Claude Code","'","ll be able to..."`) 需特别关注，翻译被拆分的的部分
+- **翻译值中不得包含未转义的 ASCII 双引号**（`"`），必须使用中文引号 `「」` 或中文全角引号代替
 
 **跳过规则：** 遇到以下情况不翻译，记入 skip-words.json：
 - 看起来是代码标识符/类名/方法名
@@ -133,6 +147,21 @@ python3 ~/.claude/scripts/engine.py apply
 ```
 
 解析输出的 JSON，确认 `ok: true`。
+
+#### 步骤 5.5：Volta 双路径同步（关键！）
+
+引擎修改 `packages/` 路径下的 cli.js，但 Volta 实际从 `node/<version>/` 路径执行。
+**必须同步，否则汉化不生效：**
+
+```bash
+# 检测 Volta 实际执行路径
+volta_exec=$(dirname "$(find ~/.volta/tools/image/node -name "cli.js" -path "*/@anthropic-ai/claude-code/*" 2>/dev/null | head -1)")
+if [ -n "$volta_exec" ] && [ "$volta_exec" != "$cli_dir" ]; then
+    cp "$cli_dir/cli.js" "$volta_exec/cli.js"
+    chmod 755 "$volta_exec/cli.js"
+    echo "已同步到 Volta 执行路径: $volta_exec"
+fi
+```
 
 #### 步骤 6：Hook UI 消息汉化（已集成到引擎）
 
@@ -228,6 +257,19 @@ python3 ~/.claude/scripts/engine.py coverage
 | 问题 | 解决方案 |
 |------|---------|
 | CLI 更新后汉化失效 | 执行 `/auto-i18n auto-update` 自动重新汉化 |
-| 语法验证失败 | 自动回滚，检查 Hook 替换规则（hooks.py） |
+| 汉化后 CLI 界面仍是英文 | 检查 Volta 双路径同步（步骤 5.5），确保 `node/<version>/` 路径已更新 |
+| 语法验证失败 | 自动回滚，检查翻译值中是否有未转义的双引号 |
 | 找不到 cli.js | 检查 Volta/npm 安装路径，或设置 `CLAUDE_I18N_CLI_DIR` 环境变量 |
-| 想恢复英文 | 执行 `/auto-i18n restore` |
+| 想恢复英文 | 执行 `/auto-i18n restore`，恢复后也需同步双路径 |
+
+### 引擎架构（v3.1）
+
+**三级替换策略（所有级别使用安全匹配）：**
+- **Long（>20 chars）**：全局 `str.replace`，精确匹配
+- **Medium（11-20 chars）**：quote-boundary regex `(?<=[\'"])en(?=[\'"])`，只匹配引号内的字符串
+- **Short（<=10 chars）**：同样使用 quote-boundary regex，安全翻译 UI 标签（如"No, exit"）
+
+**安全性保障：**
+- 替换后 `node --check` 验证语法（在 /tmp 中验证，避免 macOS 路径问题）
+- 语法失败自动回滚到备份
+- 备份使用 SHA-256 校验和验证完整性

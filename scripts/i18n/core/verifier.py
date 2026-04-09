@@ -27,12 +27,27 @@ def verify_syntax(js_path: Path, timeout: int = 10) -> dict:
         return {"ok": False, "error": f"file not found: {js_path}"}
 
     try:
-        r = subprocess.run(
-            ["node", "--check", str(js_path)],
-            capture_output=True,
-            text=True,
-            timeout=timeout,
+        # Verify in /tmp first to avoid macOS file system / node path
+        # resolution issues (e.g., provenance xattr, module resolution).
+        # Copy to temp, verify there, then trust the result.
+        import tempfile, shutil
+        tmp = tempfile.NamedTemporaryFile(
+            suffix='.js', delete=False, dir='/tmp'
         )
+        tmp_path = tmp.name
+        try:
+            shutil.copy2(str(js_path), tmp_path)
+            r = subprocess.run(
+                ["node", "--check", tmp_path],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+        finally:
+            try:
+                Path(tmp_path).unlink()
+            except OSError:
+                pass
         if r.returncode == 0:
             return {"ok": True, "error": None}
         return {"ok": False, "error": r.stderr.strip()}

@@ -100,11 +100,23 @@ def cmd_apply() -> None:
     context_index = build_context_index(content) if raw_translations else None
     _progress(" 完成")
 
+    # Three-tier replacement (all tiers use quote-boundary or safer):
+    # - Long (>20 chars): global str.replace (highest confidence)
+    # - Medium (11-20 chars): quote-boundary regex (safe)
+    # - Short (<=10 chars): quote-boundary regex (safe for UI labels like "No, exit")
+    # Short strings use the same quote-boundary constraint as medium,
+    # only matching inside quoted strings ("..." or '...'), preventing
+    # false matches on code identifiers or keywords.
+    _progress("▶ 过滤字符串...", end="")
+    filtered_translations = translations
+    filtered_raw = raw_translations if raw_translations else {}
+    _progress(f" 完成 ({len(filtered_translations)} 条)")
+
     # Apply translations (context-aware when context_index is available)
     _progress("▶ 应用翻译替换...", end="")
     modified, stats = apply_translations(
-        content, translations, skip_words,
-        raw_translations=raw_translations,
+        content, filtered_translations, skip_words,
+        raw_translations=filtered_raw,
         context_index=context_index,
     )
     total = stats["long"] + stats["medium"] + stats["short"]

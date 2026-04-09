@@ -36,7 +36,11 @@ def _find_all_positions(content: str, en: str, tier: str) -> List[int]:
     Uses tier-appropriate matching strategy:
     - long: plain string find (all occurrences)
     - medium: quote-boundary regex
-    - short: word-boundary regex
+    - short: quote-boundary regex (same as medium for safety)
+
+    Short strings now use quote-boundary matching instead of word-boundary,
+    which is much safer — only matches inside quoted strings ("..." or '...'),
+    preventing false matches in code logic like variable names or keywords.
 
     Args:
         content: The content to search in.
@@ -56,11 +60,10 @@ def _find_all_positions(content: str, en: str, tier: str) -> List[int]:
             positions.append(idx)
             start = idx + 1
         return positions
-    elif tier == "medium":
+    else:
+        # Both medium and short use quote-boundary regex for safety.
+        # This prevents matching code identifiers or keywords.
         pattern = f"(?<=[\'\"]){re.escape(en)}(?=[\'\"])"
-        return [m.start() for m in re.finditer(pattern, content)]
-    else:  # short
-        pattern = f"(?<=[\'\"\\s>])\\b{re.escape(en)}\\b(?=[\'\"\\s<])"
         return [m.start() for m in re.finditer(pattern, content)]
 
 
