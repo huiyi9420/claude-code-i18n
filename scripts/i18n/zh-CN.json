@@ -1,10 +1,11 @@
 {
   "_meta": {
     "name": "Claude Code 中文汉化",
-    "version": "4.3.0",
+    "version": "1",
     "description": "Claude Code CLI 终端 UI 汉化映射表（安全版，避免短字符串误替换）",
-    "cli_version": "2.1.92",
-    "note": "键为英文原文(需要精确匹配)，值为中文翻译。v4.3.0 批量重建。"
+    "cli_version": "2.1.97",
+    "note": "键为英文原文(需要精确匹配)，值为中文翻译。v4.3.0 批量重建。",
+    "updated_at": "2026-04-09"
   },
   "translations": {
     "Accept edits": "接受编辑",
@@ -4542,6 +4543,20 @@
     "Working": "干活中",
     "Wrangling": "驯服中",
     "Zesting": "刨丝中",
-    "Zigzagging": "曲折中"
+    "Zigzagging": "曲折中",
+    "Spawn a remote Claude Code session that monitors and autofixes the current PR": "启动一个远程 Claude Code 会话来监控并自动修复当前 PR",
+    "MCP Agent": "MCP 代理",
+    "Spawning remote Claude Code session…": "正在启动远程 Claude Code 会话…",
+    "Help teammates ramp on Claude Code with a guide from your usage": "通过基于您使用习惯的指南帮助队友快速上手 Claude Code",
+    "Restarting Claude Code to apply the new model…": "正在重启 Claude Code 以应用新模型…",
+    "WARNING: You have unpushed local commits, run git push so the remote session sees them": "警告：你有未推送的本地提交，请运行 git push 以便远程会话能看到它们",
+    "Use /voice to enable push-to-talk dictation": "使用 /voice 启用按键说话语音输入",
+    "Set the session title (same effect as /rename)": "设置会话标题（效果同 /rename）",
+    "Code review session": "代码审查会话",
+    "Financial Agent": "财务代理",
+    "Restricted Agent": "受限代理",
+    "GitHub Agent": "GitHub 代理",
+    "Hello World Session": "Hello World 会话",
+    "Extract MCP server declaration on agents and vault-based credential injection at session": "提取代理配置中的 MCP 服务器声明和会话级密钥库凭据注入"
   }
 }
