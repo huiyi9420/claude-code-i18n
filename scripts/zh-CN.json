@@ -673,6 +673,7 @@
     "Enable Claude in Chrome integration": "启用 Chrome 中的 Claude 集成",
     "Disable Claude in Chrome integration": "禁用 Chrome 中的 Claude 集成",
     "Tip: You can launch Claude Code with just `claude`": "提示：你可以直接使用 `claude` 启动 Claude Code",
+    "Tip: Run /terminal-setup to enable Shift+Enter for new lines": "提示：运行 /terminal-setup 启用 Shift+Enter 换行",
     "Error: Failed to run with Claude in Chrome.": "错误：无法在 Chrome 中运行 Claude。",
     "You cannot use --strict-mcp-config when an enterprise MCP config is present": "当存在企业 MCP 配置时，不能使用 --strict-mcp-config",
     "You cannot dynamically configure MCP servers when an enterprise MCP config is present": "当存在企业 MCP 配置时，不能动态配置 MCP 服务器",

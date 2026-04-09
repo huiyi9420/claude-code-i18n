@@ -182,10 +182,12 @@ class TestEngineEntryPoint:
 
     def test_engine_help(self):
         """python engine.py --help should output help and exit 0."""
+        # Get project root directory (parent of tests/)
+        project_root = Path(__file__).parent.parent.parent
         result = subprocess.run(
             [sys.executable, 'scripts/engine.py', '--help'],
             capture_output=True, text=True, timeout=10,
-            cwd='/Users/zhaolulu/Projects/claude-code-i18n',
+            cwd=str(project_root),
         )
         assert result.returncode == 0
         assert 'status' in result.stdout
@@ -193,9 +195,10 @@ class TestEngineEntryPoint:
 
     def test_engine_no_args_exits(self):
         """python engine.py without args should exit with error."""
+        project_root = Path(__file__).parent.parent.parent
         result = subprocess.run(
             [sys.executable, 'scripts/engine.py'],
             capture_output=True, text=True, timeout=10,
-            cwd='/Users/zhaolulu/Projects/claude-code-i18n',
+            cwd=str(project_root),
         )
         assert result.returncode != 0
