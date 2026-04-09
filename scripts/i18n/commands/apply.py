@@ -100,17 +100,55 @@ def cmd_apply() -> None:
     context_index = build_context_index(content) if raw_translations else None
     _progress(" 完成")
 
-    # Three-tier replacement (all tiers use quote-boundary or safer):
+    # Three-tier filtering with safe short-string whitelist:
     # - Long (>20 chars): global str.replace (highest confidence)
     # - Medium (11-20 chars): quote-boundary regex (safe)
-    # - Short (<=10 chars): quote-boundary regex (safe for UI labels like "No, exit")
-    # Short strings use the same quote-boundary constraint as medium,
-    # only matching inside quoted strings ("..." or '...'), preventing
-    # false matches on code identifiers or keywords.
+    # - Short (<=10 chars): only allow whitelisted entries that are confirmed
+    #   safe UI text (fun loading verbs, multi-word labels like "No, exit").
+    #   Generic single-word short strings (Name, Type, Error, etc.) are blocked
+    #   because they appear in code logic like defineProperty(obj,"Name",...).
     _progress("▶ 过滤字符串...", end="")
-    filtered_translations = translations
-    filtered_raw = raw_translations if raw_translations else {}
-    _progress(f" 完成 ({len(filtered_translations)} 条)")
+
+    # Whitelist: short strings known to be safe UI text.
+    # - Loading verbs (fun startup messages, e.g. "Smooshing" -> "揉碎中")
+    # - Multi-word UI labels containing spaces/punctuation (e.g. "No, exit")
+    import re as _re
+    _safe_short_patterns = [
+        _re.compile(r'^[A-Z][a-z]+ing$'),      # Loading verbs: Smooshing, Baking, ...
+        _re.compile(r'^[A-Z][a-z]+ing\'$'),     # Beboppin'
+        _re.compile(r'[,\s!?\-]'),              # Multi-word/label: "No, exit", "Yes, continue"
+    ]
+
+    def _is_safe_short(en: str) -> bool:
+        """Check if a short string (<=10 chars) is safe to translate."""
+        if len(en) > 10:
+            return True  # Not short, always included
+        for pat in _safe_short_patterns:
+            if pat.search(en):
+                return True
+        return False
+
+    filtered_translations = {}
+    skipped_short = 0
+    for en, zh in translations.items():
+        if len(en) <= 10:
+            if _is_safe_short(en):
+                filtered_translations[en] = zh
+            else:
+                skipped_short += 1
+        else:
+            filtered_translations[en] = zh
+
+    filtered_raw = {}
+    if raw_translations:
+        for en, zh in raw_translations.items():
+            if len(en) <= 10:
+                if _is_safe_short(en):
+                    filtered_raw[en] = zh
+            else:
+                filtered_raw[en] = zh
+
+    _progress(f" 完成 ({len(translations)} → {len(filtered_translations)} 条, {skipped_short} 短字符串跳过)")
 
     # Apply translations (context-aware when context_index is available)
     _progress("▶ 应用翻译替换...", end="")
