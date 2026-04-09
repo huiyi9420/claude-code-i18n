@@ -261,13 +261,6 @@ python3 -m pytest tests/ -v --cov=scripts --cov-report=html
 open htmlcov/index.html
 ```
 
-## 截图预览
-
-你可以在 `assets/` 目录添加截图：
-
-- `assets/screenshot-english.png` - 英文界面对比
-- `assets/screenshot-chinese.png` - 汉化后效果
-
 ## License
 
 MIT License - 详见 [LICENSE](LICENSE)
