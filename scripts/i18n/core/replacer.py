@@ -63,7 +63,9 @@ def _find_all_positions(content: str, en: str, tier: str) -> List[int]:
     else:
         # Both medium and short use quote-boundary regex for safety.
         # This prevents matching code identifiers or keywords.
-        pattern = f"(?<=[\'\"]){re.escape(en)}(?=[\'\"])"
+        # Extended to support template literals (backticks) for dynamic strings.
+        # Note: raw string r'...' used to avoid escape issues with backticks and quotes
+        pattern = r"(?<=['\"`])" + re.escape(en) + r"(?=['\"` $])"
         return [m.start() for m in re.finditer(pattern, content)]
 
 
