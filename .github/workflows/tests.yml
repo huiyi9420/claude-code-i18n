@@ -2,29 +2,43 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
+  # 运行单元测试，覆盖多个 Python 版本
   test:
+    name: Python ${{ matrix.python-version }} Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Set up Node.js (for syntax check)
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Run all tests
       run: |
-        python -m pytest tests/ -v --cov=scripts --cov-report=term --cov-report=xml
+        python -m pytest tests/ -v --cov=scripts --cov-report=term
 
-    - name: Check coverage
+    - name: Check install script syntax
+      run: |
+        bash -n install.sh
+        echo "✅ install.sh syntax OK"
+
+    - name: Check coverage minimum 80%
       run: |
         python scripts/ci_check_coverage.py --min-coverage 80
+      if: matrix.python-version == '3.12'
