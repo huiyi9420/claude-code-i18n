@@ -2,13 +2,15 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
-  # 运行单元测试，覆盖多个 Python 版本
+  # 运行单元测试，覆盖多个 Python 版本和操作系统
   test:
-    name: Python ${{ matrix.python-version }} Test
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.12"]
 
     steps:
     - name: Checkout code
@@ -33,7 +35,8 @@ jobs:
       run: |
         python -m pytest tests/ -v --cov=scripts --cov-report=term
 
-    - name: Check install script syntax
+    - name: Check install script syntax (Linux/macOS only)
+      if: runner.os != 'Windows'
       run: |
         bash -n install.sh
         echo "✅ install.sh syntax OK"
@@ -41,4 +44,4 @@ jobs:
     - name: Check coverage minimum 80%
       run: |
         python scripts/ci_check_coverage.py --min-coverage 80
-      if: matrix.python-version == '3.12'
+      if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'

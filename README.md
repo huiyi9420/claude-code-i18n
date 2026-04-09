@@ -153,7 +153,12 @@ claude-code-i18n/
 
 ## 系统要求
 
-- macOS / Linux
+| 操作系统 | 支持情况 | 说明 |
+|----------|----------|------|
+| **macOS** | ✅ 完整支持 | 推荐 |
+| **Linux** | ✅ 完整支持 |  |
+| **Windows** | ✅ 支持（需要 WSL 或 Git Bash）| 核心 Python 代码兼容 Windows，安装脚本需要 bash 环境 |
+
 - Python 3.8+
 - Node.js（语法验证需要）
 - Claude Code CLI
@@ -166,6 +171,7 @@ claude-code-i18n/
 | 汉化后 CLI 界面仍是英文 | 检查 Volta 双路径，执行完后会自动同步。如果还是英文，手动同步：`cp ~/.volta/tools/image/packages/@anthropic-ai/claude-code/lib/node_modules/@anthropic-ai/claude-code/cli.js ~/.volta/tools/image/node/$(basename ~/.volta/tools/image/node/*)/lib/node_modules/@anthropic-ai/claude-code/cli.js` |
 | 语法验证失败 | 会自动回滚，通常是翻译中包含了未转义的双引号 `"`，改用中文引号 `「」` |
 | 找不到 cli.js | 设置环境变量指定路径：`export CLAUDE_I18N_CLI_DIR=$(dirname $(which claude))/../lib/node_modules/@anthropic-ai/claude-code` |
+| Windows 下无法运行 | 需要使用 **WSL** 或 **Git Bash** 提供 bash 环境，原生 cmd/PowerShell 不支持 |
 | 想恢复英文 | 执行 `/auto-i18n restore`，恢复后也需重启 |
 | Volta 更新 Node 后汉化消失 | 重新执行 `/auto-i18n` 即可，会自动同步到新的 Node 版本路径 |
 
