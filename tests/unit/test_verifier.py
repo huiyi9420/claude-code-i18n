@@ -1,5 +1,6 @@
 """Tests for syntax verification module (APPLY-07, APPLY-08)."""
 
+import shutil
 import subprocess
 from pathlib import Path
 from unittest.mock import patch, MagicMock
@@ -8,10 +9,17 @@ import pytest
 
 from scripts.i18n.core.verifier import verify_syntax
 
+# Skip tests that require Node.js if it's not installed
+requires_node = pytest.mark.skipif(
+    shutil.which("node") is None,
+    reason="Node.js not installed"
+)
+
 
 class TestVerifySyntax:
     """Test verify_syntax function."""
 
+    @requires_node
     def test_verify_valid_js(self, tmp_path):
         """Valid JS file returns ok=True, error=None."""
         js_file = tmp_path / "valid.js"
@@ -20,6 +28,7 @@ class TestVerifySyntax:
         assert result["ok"] is True
         assert result["error"] is None
 
+    @requires_node
     def test_verify_invalid_js(self, tmp_path):
         """Invalid JS file returns ok=False with error message."""
         js_file = tmp_path / "invalid.js"
@@ -41,7 +50,7 @@ class TestVerifySyntax:
         js_file = tmp_path / "slow.js"
         js_file.write_text("var x = 1;", encoding="utf-8")
 
-        with patch("subprocess.run", side_effect=subprocess.TimeoutExpired(cmd="node", timeout=1)):
+        with patch("scripts.i18n.core.verifier.subprocess.run", side_effect=subprocess.TimeoutExpired(cmd="node", timeout=1)):
             result = verify_syntax(js_file, timeout=1)
 
         assert result["ok"] is False
@@ -52,12 +61,13 @@ class TestVerifySyntax:
         js_file = tmp_path / "test.js"
         js_file.write_text("var x = 1;", encoding="utf-8")
 
-        with patch("subprocess.run", side_effect=FileNotFoundError):
+        with patch("scripts.i18n.core.verifier.subprocess.run", side_effect=FileNotFoundError):
             result = verify_syntax(js_file)
 
         assert result["ok"] is False
         assert "node" in result["error"].lower()
 
+    @requires_node
     def test_verify_returns_dict(self, tmp_path):
         """verify_syntax always returns a dict with 'ok' and 'error' keys."""
         js_file = tmp_path / "test.js"
@@ -71,8 +81,8 @@ class TestVerifySyntax:
         js_file = tmp_path / "test.js"
         js_file.write_text("var x = 1;", encoding="utf-8")
 
-        with patch("subprocess.run") as mock_run:
+        with patch("scripts.i18n.core.verifier.subprocess.run") as mock_run:
             mock_run.return_value = MagicMock(returncode=0, stderr="")
             verify_syntax(js_file, timeout=30)
-            _, kwargs = mock_run.call_args
+            args, kwargs = mock_run.call_args
             assert kwargs["timeout"] == 30
