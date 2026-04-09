@@ -41,7 +41,7 @@ jobs:
         bash -n install.sh
         echo "✅ install.sh syntax OK"
 
-    - name: Check coverage minimum 80%
+    - name: Check translation coverage regression
       run: |
-        python scripts/ci_check_coverage.py --min-coverage 80
+        python scripts/ci_check_coverage.py
       if: matrix.python-version == '3.12' && matrix.os == 'ubuntu-latest'

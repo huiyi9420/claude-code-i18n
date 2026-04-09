@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """CI translation coverage regression check.
 
 Standalone script that reads zh-CN.json and compares the translation

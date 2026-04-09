@@ -15,4 +15,5 @@ htmlcov/
 coverage.xml
 
 # Planning workflow
-.planning/
+.planning/*
+!.planning/coverage-baseline.json
