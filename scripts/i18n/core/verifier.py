@@ -8,6 +8,7 @@ APPLY-08: Syntax failure should trigger automatic rollback to backup.
 """
 
 import subprocess
+import tempfile
 from pathlib import Path
 
 
@@ -27,14 +28,12 @@ def verify_syntax(js_path: Path, timeout: int = 10) -> dict:
         return {"ok": False, "error": f"file not found: {js_path}"}
 
     try:
-        # Verify in /tmp first to avoid macOS file system / node path
+        # Verify in temp directory to avoid macOS file system / node path
         # resolution issues (e.g., provenance xattr, module resolution).
-        # Copy to temp, verify there, then trust the result.
-        import tempfile, shutil
-        tmp = tempfile.NamedTemporaryFile(
-            suffix='.js', delete=False, dir='/tmp'
-        )
-        tmp_path = tmp.name
+        # Use tempfile for cross-platform compatibility.
+        import shutil
+        with tempfile.NamedTemporaryFile(suffix='.js', delete=False) as tmp:
+            tmp_path = tmp.name
         try:
             shutil.copy2(str(js_path), tmp_path)
             r = subprocess.run(
