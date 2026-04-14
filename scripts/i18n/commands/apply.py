@@ -160,6 +160,13 @@ def cmd_apply() -> None:
     total = stats["long"] + stats["medium"] + stats["short"]
     _progress(f" 完成 ({total} 处替换)")
 
+    # Post-apply UI component patches (PATCH-01~04)
+    _progress("▶ 应用 UI 组件补丁...", end="")
+    from scripts.i18n.core.patches import apply_ui_patches
+    modified, patch_stats = apply_ui_patches(modified)
+    total_patches = patch_stats.get("total", 0)
+    _progress(f" 完成 ({total_patches} 处补丁)")
+
     # Write via atomic operation
     _progress("▶ 写入 cli.js...", end="")
     atomic_write_text(cli_js, modified)

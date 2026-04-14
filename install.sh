@@ -80,7 +80,7 @@ for f in __init__.py backup.py file_io.py translation_map.py extract_snapshot.py
     cp "${SCRIPT_DIR}/scripts/i18n/io/${f}" "${TARGET_DIR}/io/"
 done
 
-for f in __init__.py scanner.py replacer.py verifier.py version.py hooks.py auto_translate.py; do
+for f in __init__.py scanner.py replacer.py verifier.py version.py hooks.py auto_translate.py patches.py; do
     cp "${SCRIPT_DIR}/scripts/i18n/core/${f}" "${TARGET_DIR}/core/"
 done
 
@@ -132,6 +132,7 @@ for f in \
     "${TARGET_DIR}/core/version.py" \
     "${TARGET_DIR}/core/hooks.py" \
     "${TARGET_DIR}/core/auto_translate.py" \
+    "${TARGET_DIR}/core/patches.py" \
     "${TARGET_DIR}/commands/apply.py" \
     "${TARGET_DIR}/commands/extract.py" \
     "${TARGET_DIR}/commands/status.py" \
