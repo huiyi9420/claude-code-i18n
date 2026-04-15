@@ -1,9 +1,9 @@
 {
   "_meta": {
     "name": "Claude Code 中文汉化",
-    "version": 6,
+    "version": 7,
     "description": "Claude Code CLI 终端 UI 汉化映射表（安全版，避免短字符串误替换）",
-    "cli_version": "2.1.105",
+    "cli_version": "2.1.108",
     "note": "键为英文原文(需要精确匹配)，值为中文翻译。v4.3.0 批量重建。",
     "updated_at": "2026-04-09"
   },
@@ -4458,6 +4458,12 @@
     "ll be able to read, edit, and execute files here.": "将能够在此读取、编辑和执行文件。",
     "Security guide": "安全指南",
     "Cannot enter an existing worktree: the current directory is not in a git repository.": "无法进入现有 worktree：当前目录不在 git 仓库中。",
-    "Skipping subagentStatusLine execution - workspace trust not accepted": "跳过 subagentStatusLine 执行 - 工作区信任未接受"
+    "Skipping subagentStatusLine execution - workspace trust not accepted": "跳过 subagentStatusLine 执行 - 工作区信任未接受",
+    "Execute JavaScript code with access to Claude Code tools": "执行可访问 Claude Code 工具的 JavaScript 代码",
+    "REPL Bash sandbox violation — auto-retrying unsandboxed": "REPL Bash 沙箱违规 — 自动重试非沙箱模式",
+    "Already in a worktree session. Use ExitWorktree to leave it before entering another.": "已在 worktree 会话中。使用 ExitWorktree 退出后再进入另一个。",
+    "Using existing ANTHROPIC_API_KEY secret": "使用现有的 ANTHROPIC_API_KEY 密钥",
+    "Ultrareview runs in Claude Code on the web and is unavailable when essential-traffic-only mode is active.": "Ultrareview 在网页版 Claude Code 上运行，essential-traffic-only 模式激活时不可用。",
+    "Analyzing your auto mode rules…": "正在分析你的自动模式规则…"
   }
 }

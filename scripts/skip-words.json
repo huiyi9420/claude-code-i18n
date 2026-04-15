@@ -3,6 +3,10 @@
     "MCP Agent\\",
     "Claude Code-doctor-probe",
     "Short tool/server label from _meta['anthropic/permissionDisplay'].displayName. Mirrors can_use_tool.display_name.",
-    "Permission-display subtitle from _meta['anthropic/permissionDisplay'].description. Mirrors can_use_tool.description."
+    "Permission-display subtitle from _meta['anthropic/permissionDisplay'].description. Mirrors can_use_tool.description.",
+    "Settings to merge when plugin is enabled. Only allowlisted keys are kept (currently: agent, subagentStatusLine)",
+    "Custom per-subagent status line shown in the agent panel; receives row context as JSON on stdin",
+    "Skipping subagentStatusLine execution - workspace trust not accepted",
+    "Extract MCP server declaration on agents and vault-based credential injection at session"
   ]
 }
