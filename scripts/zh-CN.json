@@ -1,7 +1,7 @@
 {
   "_meta": {
     "name": "Claude Code 中文汉化",
-    "version": 5,
+    "version": 6,
     "description": "Claude Code CLI 终端 UI 汉化映射表（安全版，避免短字符串误替换）",
     "cli_version": "2.1.105",
     "note": "键为英文原文(需要精确匹配)，值为中文翻译。v4.3.0 批量重建。",
@@ -4456,6 +4456,8 @@
     "Error: --tmux requires --worktree": "错误：--tmux 需要 --worktree",
     "s in this folder first.": "",
     "ll be able to read, edit, and execute files here.": "将能够在此读取、编辑和执行文件。",
-    "Security guide": "安全指南"
+    "Security guide": "安全指南",
+    "Cannot enter an existing worktree: the current directory is not in a git repository.": "无法进入现有 worktree：当前目录不在 git 仓库中。",
+    "Skipping subagentStatusLine execution - workspace trust not accepted": "跳过 subagentStatusLine 执行 - 工作区信任未接受"
   }
 }
