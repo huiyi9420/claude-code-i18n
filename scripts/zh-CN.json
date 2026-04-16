@@ -1,11 +1,11 @@
 {
   "_meta": {
     "name": "Claude Code 中文汉化",
-    "version": 7,
+    "version": 8,
     "description": "Claude Code CLI 终端 UI 汉化映射表（安全版，避免短字符串误替换）",
-    "cli_version": "2.1.108",
+    "cli_version": "2.1.110",
     "note": "键为英文原文(需要精确匹配)，值为中文翻译。v4.3.0 批量重建。",
-    "updated_at": "2026-04-09"
+    "updated_at": "2026-04-16"
   },
   "translations": {
     "Accept edits": "接受编辑",
@@ -4464,6 +4464,11 @@
     "Already in a worktree session. Use ExitWorktree to leave it before entering another.": "已在 worktree 会话中。使用 ExitWorktree 退出后再进入另一个。",
     "Using existing ANTHROPIC_API_KEY secret": "使用现有的 ANTHROPIC_API_KEY 密钥",
     "Ultrareview runs in Claude Code on the web and is unavailable when essential-traffic-only mode is active.": "Ultrareview 在网页版 Claude Code 上运行，essential-traffic-only 模式激活时不可用。",
-    "Analyzing your auto mode rules…": "正在分析你的自动模式规则…"
+    "Analyzing your auto mode rules…": "正在分析你的自动模式规则…",
+    "Push when Claude decides": "Claude 决定时推送",
+    "Signaled claude daemon to restart": "已发送信号重启 claude 守护进程",
+    "Allow Claude to push to your mobile device when it deems it appropriate (requires Remote Control)": "允许 Claude 认为适当时推送到你的移动设备（需要 Remote Control）",
+    "MCP transport lost mid-call": "MCP 传输中途丢失",
+    "Spawn a remote Claude Code session that runs the autopilot workflow on your task": "启动远程 Claude Code 会话，在你的任务上运行自动驾驶工作流"
   }
 }
