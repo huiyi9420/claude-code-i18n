@@ -44,13 +44,13 @@ def _replace_description(frontmatter: str, new_desc: str) -> str:
         re.MULTILINE,
     )
 
-    # Check if original had quotes
+    # Check if original had description
     m = pattern.search(frontmatter)
     if not m:
         # No existing description, append it
         return frontmatter.rstrip('\n') + f'\ndescription: "{new_desc}"\n'
 
-    # Use double quotes, escape internal double quotes
+    # Use double quotes, escape ALL ASCII double quotes in the description
     escaped = new_desc.replace('"', '\\"')
     replacement = f'description: "{escaped}"'
     return pattern.sub(replacement, frontmatter)
