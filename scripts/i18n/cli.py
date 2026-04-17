@@ -82,6 +82,18 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser('auto-update', help='One-click: detect, translate, apply')
     sub.add_parser('coverage', help='Show translation coverage report')
     sub.add_parser('validate', help='Validate translation quality')
+    sub.add_parser('scan-skills', help='Scan skill descriptions for translation')
+
+    ts = sub.add_parser('translate-skills', help='Translate skill descriptions')
+    ts_group = ts.add_mutually_exclusive_group()
+    ts_group.add_argument('--list', action='store_true', default=True,
+                          help='Output English descriptions for translation')
+    ts_group.add_argument('--apply', type=str, metavar='JSON_FILE',
+                          help='Apply translated JSON to SKILL.md files')
+    ts.add_argument('--source', type=str, default='all',
+                    help='Filter by source')
+    ts.add_argument('--skill', type=str, default=None,
+                    help='Filter by skill name (comma-separated)')
 
     return parser
 
@@ -118,6 +130,8 @@ def main() -> None:
     from scripts.i18n.commands.auto_update import cmd_auto_update
     from scripts.i18n.commands.coverage import cmd_coverage
     from scripts.i18n.commands.validate import cmd_validate
+    from scripts.i18n.commands.scan_skills import cmd_scan_skills
+    from scripts.i18n.commands.translate_skills import cmd_translate_skills
 
     commands = {
         'status': cmd_status,
@@ -128,11 +142,16 @@ def main() -> None:
         'auto-update': cmd_auto_update,
         'coverage': cmd_coverage,
         'validate': cmd_validate,
+        'scan-skills': cmd_scan_skills,
+        'translate-skills': cmd_translate_skills,
     }
 
     cmd_func = commands.get(args.command)
     if cmd_func:
-        cmd_func()
+        if args.command == 'translate-skills':
+            cmd_func(args)
+        else:
+            cmd_func()
     else:
         parser.print_help()
         sys.exit(1)

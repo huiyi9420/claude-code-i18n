@@ -50,6 +50,8 @@ cp "$cli_dir/cli.js" "$volta_exec_path/cli.js" && chmod 755 "$volta_exec_path/cl
 | status | 查看汉化状态 |
 | auto-update | 自我进化：自动提取->规则翻译->合并->应用（一键完成） |
 | coverage | 查看翻译覆盖率报告 |
+| scan-skills | 扫描已安装技能，报告哪些描述需要汉化 |
+| translate-skills | 翻译指定技能的描述 |
 
 ---
 
@@ -197,6 +199,68 @@ claude -p "回复两个字：成功" 2>&1
 - 语法验证结果
 - 功能测试结果
 - 提醒：请重启 Claude Code 查看效果
+
+#### 步骤 10：技能描述汉化（可选）
+
+询问用户是否需要扫描并汉化已安装的技能/工具描述。如果用户确认：
+
+1. 扫描技能描述：
+```bash
+python3 ~/.claude/scripts/engine.py scan-skills
+```
+
+2. 如果有英文描述，输出待翻译列表：
+```bash
+python3 ~/.claude/scripts/engine.py translate-skills --list
+```
+
+3. 对输出的英文描述逐条翻译为中文（遵循同样的翻译原则）
+
+4. 将翻译结果保存为 JSON 文件并应用：
+```bash
+python3 ~/.claude/scripts/engine.py translate-skills --apply /tmp/skill-translations.json
+```
+
+JSON 格式为：
+```json
+[
+  {"name": "skill-name", "path": "/path/to/SKILL.md", "description": "English desc", "translated": "中文描述"}
+]
+```
+
+5. 汇报结果：已翻译数量、跳过数量
+
+---
+
+### scan-skills 流程
+
+```bash
+python3 ~/.claude/scripts/engine.py scan-skills
+```
+
+扫描 `~/.claude/skills/` 和 `~/.claude/plugins/marketplaces/` 下的所有 SKILL.md 文件，输出 JSON 报告：
+- `summary`: 总数、中文数、英文数、按来源分组统计
+- `skills`: 每个技能的名称、路径、描述、语言标识（zh/en）、来源
+
+---
+
+### translate-skills 流程
+
+```bash
+# 输出待翻译列表
+python3 ~/.claude/scripts/engine.py translate-skills --list [--source all] [--skill name1,name2]
+
+# 应用翻译
+python3 ~/.claude/scripts/engine.py translate-skills --apply translations.json
+```
+
+`--source` 支持的值：`all`（默认）、`user_skills`、`ecc_plugin`、`minimax_plugin`、`official_plugin`
+
+**工作流程：**
+1. `--list` 输出英文描述列表
+2. AI 逐条翻译
+3. 生成翻译 JSON 文件
+4. `--apply` 批量写入 SKILL.md 的 frontmatter description 字段
 
 ---
 

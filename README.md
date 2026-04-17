@@ -61,6 +61,8 @@ bash install.sh
 | `/auto-i18n restore` | 一键恢复英文原文 |
 | `/auto-i18n status` | 查看当前汉化状态 |
 | `/auto-i18n coverage` | 查看翻译覆盖率统计 |
+| `/auto-i18n scan-skills` | 扫描已安装技能描述语言 |
+| `/auto-i18n translate-skills` | 翻译技能描述为中文 |
 
 ### 命令行（不依赖技能命令）
 
@@ -73,6 +75,9 @@ python3 ~/.claude/scripts/engine.py restore      # 恢复英文
 python3 ~/.claude/scripts/engine.py status       # 查看状态
 python3 ~/.claude/scripts/engine.py coverage     # 覆盖率报告
 python3 ~/.claude/scripts/engine.py extract      # 提取新字符串
+python3 ~/.claude/scripts/engine.py scan-skills  # 扫描技能描述
+python3 ~/.claude/scripts/engine.py translate-skills --list   # 列出待翻译技能
+python3 ~/.claude/scripts/engine.py translate-skills --apply translations.json  # 应用翻译
 ```
 
 ## 工作原理
@@ -122,7 +127,7 @@ claude-code-i18n/
 │       ├── io/                # 备份、文件IO、翻译映射、快照
 │       ├── core/              # 扫描、替换、验证、Hook、自动翻译
 │       ├── filters/           # 噪声过滤、UI 指示器
-│       └── commands/          # apply/extract/status/restore/auto-update
+│       └── commands/          # apply/extract/status/restore/auto-update/scan-skills/translate-skills
 ├── tests/                     # pytest 测试套件
 ├── install.sh                 # 安装脚本
 └── README.md
@@ -142,6 +147,35 @@ claude-code-i18n/
 ```
 
 修改后再次执行 `/auto-i18n` 即可应用。
+
+## 技能描述汉化
+
+auto-i18n 支持将已安装技能和插件的描述翻译为中文，包括：
+
+- `~/.claude/skills/` — 用户自安装技能
+- `~/.claude/plugins/marketplaces/` — 插件市场技能（ECC、MiniMax、官方等）
+
+### 使用方式
+
+```bash
+# 1. 扫描技能描述语言
+python3 ~/.claude/scripts/engine.py scan-skills
+
+# 2. 输出待翻译列表
+python3 ~/.claude/scripts/engine.py translate-skills --list
+
+# 3. AI 翻译后生成 JSON 文件，然后应用
+python3 ~/.claude/scripts/engine.py translate-skills --apply translations.json
+```
+
+翻译 JSON 格式：
+```json
+[
+  {"name": "skill-name", "path": "/path/to/SKILL.md", "description": "English", "translated": "中文描述"}
+]
+```
+
+插件更新后会覆盖翻译，重新执行 `translate-skills` 即可恢复。
 
 ## 支持的安装方式
 
